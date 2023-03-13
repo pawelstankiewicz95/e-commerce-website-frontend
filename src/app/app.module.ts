@@ -6,6 +6,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HttpClientModule } from '@angular/common/http'
 import { ProductService } from './services/product.service';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,12 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
   ],
   imports: [
     HttpClientModule,
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot([
+      {path:'product-category/:categoryName'
+      }
+
+    ]),
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

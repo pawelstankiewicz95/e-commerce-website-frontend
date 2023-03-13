@@ -23,6 +23,10 @@ export class ProductService {
   }
 
   public deleteProduct(productID: number): Observable<void> {
-    return this.httpClient.delete<void>('${this.apiServerUrl}/${productID}');
+    return this.httpClient.delete<void>(`${this.apiServerUrl}/${productID}`);
+  }
+
+  public getProductsByCategoryId(categoryId: number): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.apiServerUrl}/products-by-category-id/${categoryId}`);
   }
 }
