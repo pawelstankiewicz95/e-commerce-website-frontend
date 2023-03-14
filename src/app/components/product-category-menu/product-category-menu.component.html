@@ -1,1 +1,5 @@
-<div><p *ngFor="let productCategory of productCategories"> {{productCategory.categoryName}}</p></div>
+<div>
+    <p *ngFor="let productCategory of productCategories">
+        <a routerLink="category/{{ productCategory.id }}">{{ productCategory.categoryName }}</a>
+    </p>
+</div>
