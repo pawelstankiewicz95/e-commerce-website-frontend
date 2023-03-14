@@ -2,14 +2,15 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <a href="#">Toys</a>
-    <a href="#">Books</a>
-    <a href="#">Cups</a>
-    <a href="#">Accessories</a>
+    <a routerLink="category/1">Toys</a>
+    <a routerLink="category/2">Books</a>
+    <a routerLink="category/3">Cups</a>
+    <a routerLink="category/4">Accessories</a>
+  
   </div>
   <!--End of sidebar-->
 
   <div class="main">
-    <app-product-list></app-product-list>
+    <router-outlet></router-outlet>
   </div>
 </div>
