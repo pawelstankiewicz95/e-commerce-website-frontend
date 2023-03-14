@@ -20,17 +20,16 @@ export class ProductListComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getId();
-    this.getProducts();
-    this.getProductsByCategoryId(this.categoryId);
+    this.route.paramMap.subscribe(() => this.getProductsByCategoryId());
   }
 
   public getProducts(): void {
     this.productService.getProucts().subscribe((response: Product[]) => this.products = response);
   }
 
-  public getProductsByCategoryId(id: number) {
-    this.productService.getProductsByCategoryId(id).subscribe((response: Product[]) => this.productsByCategoryId = response);
+  public getProductsByCategoryId() {
+    this.getId();
+    this.productService.getProductsByCategoryId(this.categoryId).subscribe((response: Product[]) => this.productsByCategoryId = response);
   }
 
   public getId():void{
@@ -38,6 +37,7 @@ export class ProductListComponent implements OnInit {
     if (hasCategoryId) {
       this.categoryId = +this.route.snapshot.paramMap.get('id')!;
     }
+    else this.categoryId == 1;
   }
 
 }
