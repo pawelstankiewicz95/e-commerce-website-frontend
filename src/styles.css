@@ -35,3 +35,7 @@
     max-width: 20%;
     height: auto;
   }
+
+  .active {
+    background-color: rgb(170, 204, 243);
+  }

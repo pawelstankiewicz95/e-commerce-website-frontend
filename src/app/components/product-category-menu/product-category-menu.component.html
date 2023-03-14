@@ -1,5 +1,5 @@
 <div>
     <p *ngFor="let productCategory of productCategories">
-        <a routerLink="category/{{ productCategory.id }}">{{ productCategory.categoryName }}</a>
+        <a routerLink="category/{{ productCategory.id }}" routerLinkActive="active">{{ productCategory.categoryName }}</a>
     </p>
 </div>
