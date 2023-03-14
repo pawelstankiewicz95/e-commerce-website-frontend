@@ -1,12 +1,16 @@
 <div>
     <table class="table">
         <thead>
+            <th></th>
             <th>Name</th>
             <th>Price</th>
             <th>Units in Stock</th>
         </thead>
         <tbody>
             <tr *ngFor="let product of productsByCategoryId">
+                <td>
+                    <img src="{{product.imageUrl}}" alt="placeholder" class="img">
+                </td>
                 <td>
                     {{product.name}}
                 </td>
