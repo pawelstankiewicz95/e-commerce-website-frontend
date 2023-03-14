@@ -30,3 +30,8 @@
   .main {
     margin-left: 180px;
   }
+
+  .img {
+    max-width: 20%;
+    height: auto;
+  }
