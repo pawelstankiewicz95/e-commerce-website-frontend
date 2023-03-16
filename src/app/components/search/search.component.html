@@ -1,4 +1,4 @@
-<div></div>
-<input class="" type="text" placeholder="Search..">
-<button class="">Search</button>
-<div></div>
+<div>
+<input  #searchInput (keyup.enter)="onSubmit(searchInput.value)" class="" type="text" placeholder="Search by name or sku...">
+<button (click)="onSubmit(searchInput.value)" class="">Search</button>
+</div>

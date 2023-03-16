@@ -29,4 +29,8 @@ export class ProductService {
   public getProductsByCategoryId(categoryId: number): Observable<Product[]> {
     return this.httpClient.get<Product[]>(`${this.apiServerUrl}/products-by-category-id/${categoryId}`);
   }
+
+  public getProductsByNameLikeOrSkuLike(nameOrSku: String): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.apiServerUrl}/products-by-name-or-sku/${nameOrSku}`)
+  }
 }
