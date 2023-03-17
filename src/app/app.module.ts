@@ -9,10 +9,12 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
 const routes: Routes = [
-  { path: 'search/:searchParam', component: ProductListComponent},
+  { path: 'search/', redirectTo: '/products', pathMatch:'full' },
+  { path: 'search/:searchParam', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent },
+  { path: 'products', component: ProductListComponent },
   { path: '', component: ProductListComponent },
-  { path: '**', component: ProductListComponent}
+  { path: '**', component: ProductListComponent }
 ];
 @NgModule({
   declarations: [
