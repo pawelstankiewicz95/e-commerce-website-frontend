@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent },
-  { path: 'product-details/:productId', component: ProductDetailsComponent }
+  { path: 'product-details/:productId', component: ProductDetailsComponent },
   { path: 'products', component: ProductListComponent },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
