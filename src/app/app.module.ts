@@ -8,10 +8,12 @@ import { ProductService } from './services/product.service';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 const routes: Routes = [
-  { path: 'search/', redirectTo: '/products', pathMatch:'full' },
+  { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent },
+  { path: 'product-details/:productId', component: ProductDetailsComponent }
   { path: 'products', component: ProductListComponent },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
@@ -21,7 +23,8 @@ const routes: Routes = [
     AppComponent,
     ProductListComponent,
     ProductCategoryMenuComponent,
-    SearchComponent
+    SearchComponent,
+    ProductDetailsComponent
   ],
   imports: [
     HttpClientModule,
