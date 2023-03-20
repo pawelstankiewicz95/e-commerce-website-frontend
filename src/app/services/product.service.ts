@@ -33,4 +33,8 @@ export class ProductService {
   public getProductsByNameLikeOrSkuLike(nameOrSku: String): Observable<Product[]> {
     return this.httpClient.get<Product[]>(`${this.apiServerUrl}/products-by-name-or-sku/${nameOrSku}`)
   }
+
+  public getProductById(productID: number): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.apiServerUrl}/${productID}`);
+  }
 }
