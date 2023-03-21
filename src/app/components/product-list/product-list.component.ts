@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class ProductListComponent implements OnInit {
   searchValue: string = "";
 
   constructor(private productService: ProductService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private cartService: CartService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => this.handleShowingProducts());
@@ -49,6 +51,11 @@ export class ProductListComponent implements OnInit {
   public searchProductsByNameOrSku() {
     this.searchValue = this.route.snapshot.paramMap.get('searchParam')!;
     this.productService.getProductsByNameLikeOrSkuLike(this.searchValue).subscribe((response: Product[]) => this.products = response);
+  }
+
+  public addToCart(product: Product){
+    this.cartService.addToCart(product);
+    window.alert('You have added product to the cart!');
   }
 
 }
