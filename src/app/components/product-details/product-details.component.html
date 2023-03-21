@@ -12,7 +12,7 @@
                 <p class="card-text">Units left: {{product.unitsInStock}}</p>
                 <p class="card-text"><small class="text-muted">Added: {{product.dateCreated}}, Last Updated:
                         {{product.lastUpdated}}</small></p>
-                <a href="#" class="btn btn-primary">Add to Cart</a>
+                <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
             </div>
         </div>
     </div>
