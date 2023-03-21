@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class ProductDetailsComponent {
   hasProductId: boolean = false;
 
   constructor(private productService: ProductService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private cartService: CartService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(() => this.handleShowingProductDetails());
@@ -31,6 +33,11 @@ export class ProductDetailsComponent {
   public getProductById() {
     this.productId = +this.route.snapshot.paramMap.get('productId')!;
     this.productService.getProductById(this.productId).subscribe((response: Product) => this.product = response);
+  }
+
+  public addToCart(product: Product){
+    this.cartService.addToCart(this.product);
+    window.alert('You have added product to the cart!');
   }
 
 }
