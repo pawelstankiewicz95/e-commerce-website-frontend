@@ -9,6 +9,8 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 import { RouterModule, Routes } from '@angular/router';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CartBarComponent } from './components/cart-bar/cart-bar.component';
 const routes: Routes = [
   { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
@@ -24,7 +26,9 @@ const routes: Routes = [
     ProductListComponent,
     ProductCategoryMenuComponent,
     SearchComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartComponent,
+    CartBarComponent
   ],
   imports: [
     HttpClientModule,
