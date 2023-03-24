@@ -26,7 +26,8 @@ export class CartComponent {
     this.cartService.computeCartContent();
   }
 
-
-
-
+  increaseProductQuantity(cartProduct: CartProduct) {
+    cartProduct.quantity++;
+    this.cartService.computeCartContent();
+  }
 }
