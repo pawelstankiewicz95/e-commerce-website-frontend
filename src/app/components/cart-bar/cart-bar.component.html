@@ -1,1 +1,1 @@
-<a routerLink="/cart" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Cart ({{totalQuantityOfProducts}} items - ${{totalCartValue}})</a>
+<a routerLink="/cart" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Cart ({{totalQuantityOfProducts}} items - {{totalCartValue | currency: 'USD'}})</a>
