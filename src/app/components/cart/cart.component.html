@@ -1,34 +1,61 @@
 <div class="row">
-    <div class="card col-md-8 p-0">
-        <div class="card-header">
-            <h5>Cart ({{totalQuantityOfProducts}}) </h5>
-        </div>
-        <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
-            <div class="row">
-                <div class="col-md-2"><img src="{{cartProduct.product.imageUrl}}" class="card-img" alt="placeholder">
-                </div>
-                <div class="col-md-4 align-self-center">
-                    <p class="fw-bold">{{cartProduct.product.name}}</p>
-                    <p>{{cartProduct.product.description}}</p>
-                </div>
-                <div class="col-md-2 align-self-center">
-                    <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice | currency: 'USD'}}</p>
-                    <p class="text-center border-top text-black-50">{{cartProduct.quantity * cartProduct.product.unitPrice | currency: 'USD'}}</p>
-                </div>
-                <div class="col-md-4 align-self-center">
-                    <p class="text-center"> <i class="fa-sharp fa-solid fa-circle-plus" style="color: #0d6efd;"></i>
-                        {{cartProduct.quantity}} <i class="fa-sharp fa-solid fa-circle-minus"
-                            style="color: #0d6efd;"></i></p>
+    <div class="col-md-8 h-100 ">
+        <!-- Cart card -->
+        <div class="card">
+            <div class="card-header">
+                <h5>Cart ({{totalQuantityOfProducts}})</h5>
+            </div>
+            <div class="card-body">
+                <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
+                    <div class="row">
+                        <div class="col-md-2"><img src="{{cartProduct.product.imageUrl}}" class="card-img"
+                                alt="placeholder">
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <p class="fw-bold">{{cartProduct.product.name}}</p>
+                            <p>{{cartProduct.product.description}}</p>
+                        </div>
+                        <div class="col-md-2 align-self-center">
+                            <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice |
+                                currency:
+                                'USD'}}</p>
+                            <p class="text-center border-top text-black-50">{{cartProduct.quantity *
+                                cartProduct.product.unitPrice | currency: 'USD'}}</p>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <p class="text-center"> <button class="btn bg-transparent"><i class="fa-solid fa-minus"
+                                        style="color: #0d6efd;"></i></button>
+                                {{cartProduct.quantity}} <button class="btn bg-transparent"><i class="fa-solid fa-plus"
+                                        style="color: #0d6efd;"></i></button></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="card col-md-4 p-0 h-100">
-        <div class="card-header bg-">
-            <h5>Summary</h5>
-        </div>
-        <div class="card-body">
-            This is some text within a card body.
+    <!--end of cart card-->
+
+    <!-- Summary card -->
+    <div class="col-md-4 h-100 ">
+        <div class="card p-0">
+            <div class="card-header bg-">
+                <h5>Summary</h5>
+            </div>
+            <div class="card-body">
+                <div>
+                    <p class="d-flex justify-content-between"><span>Products</span> <span>{{totalCartValue |
+                            currency:'USD'}}</span></p>
+                    <p class="d-flex justify-content-between"><span>Shipping</span> <span>{{shippingPrice |
+                            currency:'USD'}}</span></p>
+                    <p class="d-flex justify-content-between border-top"><span>Total price</span> <span>{{totalCartValue
+                            +
+                            shippingPrice | currency:'USD'}}</span></p>
+                </div>
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn btn-primary mt-2">CHECKOUT</button>
+                </div>
+            </div>
         </div>
     </div>
+    <!--end of summary card-->
 </div>
