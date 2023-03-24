@@ -11,6 +11,7 @@ export class CartComponent {
   cartProducts: CartProduct[] = [];
   totalCartValue: number = 0;
   totalQuantityOfProducts: number = 0;
+  shippingPrice: number = 0;
 
   constructor(private cartService: CartService) { };
 
