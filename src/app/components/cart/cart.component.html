@@ -3,7 +3,7 @@
         <!-- Cart card -->
         <div class="card">
             <div class="card-header">
-                <h5>Cart ({{totalQuantityOfProducts}})</h5>
+                  <div class="d-flex justify-content-between align-items-center"><h5 class=" m-0"> Cart ({{totalQuantityOfProducts}})</h5> <button (click)="clearCart()" class="btn btn-primary">Remove all</button> </div>
             </div>
             <div class="card-body">
                 <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
@@ -25,7 +25,8 @@
                         <div class="col-md-4 align-self-center">
                             <p class="text-center"> <button class="btn bg-transparent"><i class="fa-solid fa-minus"
                                         style="color: #0d6efd;"></i></button>
-                                {{cartProduct.quantity}} <button (click)="increaseProductQuantity(cartProduct)" class="btn bg-transparent"><i class="fa-solid fa-plus"
+                                {{cartProduct.quantity}} <button (click)="increaseProductQuantity(cartProduct)"
+                                    class="btn bg-transparent"><i class="fa-solid fa-plus"
                                         style="color: #0d6efd;"></i></button></p>
                         </div>
                     </div>
