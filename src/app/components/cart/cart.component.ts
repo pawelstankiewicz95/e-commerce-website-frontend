@@ -31,6 +31,11 @@ export class CartComponent {
     this.cartService.computeCartContent();
   }
 
+  decreaseProductQuantity(cartProduct: CartProduct){
+    cartProduct.quantity--;
+    this.cartService.computeCartContent();
+  }
+
   clearCart() {
     this.cartService.clearCart();
     this.cartProducts = this.cartService.cartProducts;
