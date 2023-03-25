@@ -3,31 +3,40 @@
         <!-- Cart card -->
         <div class="card">
             <div class="card-header">
-                  <div class="d-flex justify-content-between align-items-center"><h5 class=" m-0"> Cart ({{totalQuantityOfProducts}})</h5> <button (click)="clearCart()" class="btn btn-primary">Remove all</button> </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class=" m-0"> Cart ({{totalQuantityOfProducts}})</h5> <button (click)="clearCart()"
+                        class="btn btn-primary">Remove all</button>
+                </div>
             </div>
             <div class="card-body">
                 <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
-                    <div class="row">
-                        <div class="col-md-2"><img src="{{cartProduct.product.imageUrl}}" class="card-img"
-                                alt="placeholder">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <img src="{{cartProduct.product.imageUrl}}" class="card-img" alt="placeholder">
                         </div>
-                        <div class="col-md-4 align-self-center">
+                        <div class="col-md-4">
                             <p class="fw-bold">{{cartProduct.product.name}}</p>
-                            <p>{{cartProduct.product.description}}</p>
+                            <span>{{cartProduct.product.description}}</span>
                         </div>
-                        <div class="col-md-2 align-self-center">
+                        <div class="col-md-2 text-center">
                             <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice |
                                 currency:
                                 'USD'}}</p>
-                            <p class="text-center border-top text-black-50">{{cartProduct.quantity *
-                                cartProduct.product.unitPrice | currency: 'USD'}}</p>
+                            <span class="text-center border-top text-black-50">{{cartProduct.quantity *
+                                cartProduct.product.unitPrice | currency: 'USD'}}</span>
                         </div>
-                        <div class="col-md-4 align-self-center">
-                            <p class="text-center"> <button class="btn bg-transparent"><i class="fa-solid fa-minus"
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <button *ngIf="cartProduct.quantity > 1" (click)="decreaseProductQuantity(cartProduct)"
+                                    class="btn bg-transparent"><i class="fa-solid fa-minus"
                                         style="color: #0d6efd;"></i></button>
-                                {{cartProduct.quantity}} <button (click)="increaseProductQuantity(cartProduct)"
+                                <button *ngIf="cartProduct.quantity <= 1" class="btn bg-transparent">
+                                    <i class="fa-solid fa-minus" style="color: #c2c3c5;"></i></button>
+                                <span>{{cartProduct.quantity}} </span>
+                                <button (click)="increaseProductQuantity(cartProduct)"
                                     class="btn bg-transparent"><i class="fa-solid fa-plus"
-                                        style="color: #0d6efd;"></i></button></p>
+                                        style="color: #0d6efd;"></i></button>
+                                </div>
                         </div>
                     </div>
                 </div>
