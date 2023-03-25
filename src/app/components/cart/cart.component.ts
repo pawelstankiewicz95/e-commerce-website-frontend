@@ -30,4 +30,10 @@ export class CartComponent {
     cartProduct.quantity++;
     this.cartService.computeCartContent();
   }
+
+  clearCart() {
+    this.cartService.clearCart();
+    this.cartProducts = this.cartService.cartProducts;
+    this.cartService.computeCartContent();
+  }
 }
