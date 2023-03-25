@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'search/:searchParam', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent },
   { path: 'product-details/:productId', component: ProductDetailsComponent },
+  { path: 'cart', component: CartComponent},
   { path: 'products', component: ProductListComponent },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
