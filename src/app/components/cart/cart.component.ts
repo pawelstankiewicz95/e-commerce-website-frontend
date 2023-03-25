@@ -41,4 +41,9 @@ export class CartComponent {
     this.cartProducts = this.cartService.cartProducts;
     this.cartService.computeCartContent();
   }
+  removeFromCart(cartProduct: CartProduct){
+    this.cartService.removeFromCart(cartProduct);
+    this.cartProducts = this.cartService.cartProducts;
+    this.cartService.computeCartContent();
+  }
 }

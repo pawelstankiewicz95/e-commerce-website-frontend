@@ -50,4 +50,12 @@ export class CartService {
     this.totalCartValue.next(computedTotalCartValue);
     this.totalQuantityOfProducts.next(computedTotalQuanity);
   }
+
+  removeFromCart(cartProduct: CartProduct) {
+    const productIndex = this.cartProducts.findIndex(tempCartProduct => (tempCartProduct.product.id === cartProduct.product.id));
+    if (productIndex > -1) {
+      this.cartProducts.splice(productIndex, 1);
+    }
+    this.computeCartContent();
+  }
 }
