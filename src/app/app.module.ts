@@ -11,6 +11,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CartBarComponent } from './components/cart-bar/cart-bar.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 const routes: Routes = [
   { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
     SearchComponent,
     ProductDetailsComponent,
     CartComponent,
-    CartBarComponent
+    CartBarComponent,
+    CheckoutComponent
   ],
   imports: [
     HttpClientModule,
