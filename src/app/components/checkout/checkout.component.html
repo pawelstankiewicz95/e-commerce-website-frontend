@@ -1,1 +1,58 @@
-<p>checkout works!</p>
+<div class="row">
+    <div class="row gy-2 col-md-8 h-100 ">
+        <div class="card p-0">
+            <div class="card-header">
+                <h5 class="m-0">Personal Information</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="chechkoutFormGroup">
+                    <div formGroupName="customer">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input formControlName="firstName" type="text" class="form-control" id="firstName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input formControlName="lastName" type="text" class="form-control" id="lastName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input formControlName="phoneNumber" type="text" class="form-control" id="email">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card p-0">
+            <div class="card-header">
+                <h5 class="m-0">Delivery Address</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="chechkoutFormGroup">
+                    <div formGroupName="address">
+                        <div class="mb-3">
+                            <label for="streetAddress" class="form-label">Street Address</label>
+                            <input formControlName="streetAddress" type="text" class="form-control" id="streetAddress"
+                                placeholder="Street and home">
+                        </div>
+                        <div class="mb-3">
+                            <label for="city" class="form-label">City</label>
+                            <input formControlName="city" type="text" class="form-control" id="city" placeholder="City">
+                        </div>
+                        <div class="mb-3">
+                            <label for="zipCode" class="form-label">Zip Code</label>
+                            <input formControlName="zipCode" type="text" class="form-control" id="zipCode"
+                                placeholder="00-000">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
