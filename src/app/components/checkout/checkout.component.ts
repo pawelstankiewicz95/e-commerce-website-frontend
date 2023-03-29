@@ -8,17 +8,17 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class CheckoutComponent implements OnInit {
 
-  chechkoutFormGroup!: FormGroup;
+  checkoutFormGroup!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.chechkoutFormGroup = this.formBuilder.group({
+    this.checkoutFormGroup = this.formBuilder.group({
       coustomer: this.formBuilder.group({
-        'firstName': new FormControl('', [Validators.required]),
-        'lastName': new FormControl('',Validators.required),
-        'phoneNumber': new FormControl('',[Validators.required, Validators.minLength(9)]),
-        'email': new FormControl('',[Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')])
+        'firstName': new FormControl('', Validators.required),
+        'lastName': new FormControl('', Validators.required),
+        'phoneNumber': new FormControl('',[Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
+        'email': new FormControl('',[Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)])
       }),
       address: this.formBuilder.group({
         'streetAddress': new FormControl('', [Validators.required]),
@@ -27,5 +27,31 @@ export class CheckoutComponent implements OnInit {
       })
     })
   }
+  get firstName(){
+    return this.checkoutFormGroup.get('coustomer.firstName');
+  }
 
+  get lastName(){
+    return this.checkoutFormGroup.get('coustomer.lastName');
+  }
+
+  get phoneNumber(){
+    return this.checkoutFormGroup.get('coustomer.phoneNumber');
+  }
+
+  get email(){
+    return this.checkoutFormGroup.get('coustomer.email');
+  }
+
+  get streetAddress(){
+    return this.checkoutFormGroup.get('address.streetAddress');
+  }
+
+  get city(){
+    return this.checkoutFormGroup.get('address.city');
+  }
+
+  get zipCode(){
+    return this.checkoutFormGroup.get('address.zipCode');
+  }
 }
