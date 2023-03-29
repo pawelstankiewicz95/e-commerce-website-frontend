@@ -5,23 +5,40 @@
                 <h5 class="m-0">Personal Information</h5>
             </div>
             <div class="card-body">
-                <form [formGroup]="chechkoutFormGroup">
-                    <div formGroupName="customer">
+                <form [formGroup]="checkoutFormGroup">
+                    <div formGroupName="coustomer">
                         <div class="mb-3">
                             <label for="firstName" class="form-label">First Name</label>
                             <input formControlName="firstName" type="text" class="form-control" id="firstName">
+                            <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
+                                <div *ngIf="firstName?.errors?.['required']"><div class="text-danger">First Name is required.</div></div>
+                            </div>
+                            
+
                         </div>
                         <div class="mb-3">
                             <label for="lastName" class="form-label">Last Name</label>
                             <input formControlName="lastName" type="text" class="form-control" id="lastName">
+                            <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
+                                <div *ngIf="lastName?.errors?.['required']"><div class="text-danger">Last name is required.</div></div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
                             <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber">
+                            <div *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+                                <div *ngIf="phoneNumber?.errors?.['required']"><div class="text-danger">Phone number is required</div></div>
+                                <div *ngIf="phoneNumber?.errors?.['minlength'] || phoneNumber?.errors?.['maxlength']"><div class="text-danger">Phone number must contain nine digits.</div></div>
+                                <div *ngIf="phoneNumber?.errors?.['pattern']"><div class="text-danger">Phone number must contain digits only.</div></div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input formControlName="phoneNumber" type="text" class="form-control" id="email">
+                            <input formControlName="email" type="text" class="form-control" id="email">
+                            <div *ngIf="email && email.invalid && (email.dirty || email.touched)">
+                                <div *ngIf="email?.errors?.['required']"><div class="text-danger">Email is required.</div></div>
+                                <div *ngIf="email?.errors?.['pattern']"><div class="text-danger">Invalid email format.</div></div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -33,7 +50,7 @@
                 <h5 class="m-0">Delivery Address</h5>
             </div>
             <div class="card-body">
-                <form [formGroup]="chechkoutFormGroup">
+                <form [formGroup]="checkoutFormGroup">
                     <div formGroupName="address">
                         <div class="mb-3">
                             <label for="streetAddress" class="form-label">Street Address</label>
