@@ -1,15 +1,10 @@
 <div class="container">
-
-  <!-- Navbar with search-->
-  <app-search></app-search>
-  <app-cart-bar></app-cart-bar>
-
-  <!-- Sidebar -->
   <div class="sidebar">
-  <app-product-category-menu></app-product-category-menu>
+    <app-product-category-menu></app-product-category-menu>
   </div>
-  <!--End of sidebar-->
-
+  <div class="main">
+    <app-top-nav-bar></app-top-nav-bar>
+  </div>
   <div class="main">
     <router-outlet></router-outlet>
   </div>

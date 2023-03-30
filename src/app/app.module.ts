@@ -13,6 +13,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { CartBarComponent } from './components/cart-bar/cart-bar.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
 const routes: Routes = [
   { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
     ProductDetailsComponent,
     CartComponent,
     CartBarComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    TopNavBarComponent
   ],
   imports: [
     HttpClientModule,
