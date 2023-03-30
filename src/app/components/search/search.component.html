@@ -1,4 +1,9 @@
-<div>
-<input  #searchInput (keyup.enter)="onSubmit(searchInput.value)" class="" type="text" placeholder="Search by name or sku...">
-<button (click)="onSubmit(searchInput.value)" class="">Search</button>
+<div class="row gx-2">
+    <div class="col-md-10">
+        <input #searchInput (keyup.enter)="onSubmit(searchInput.value)" class="form-control mr-sm-2" type="text"
+            placeholder="Search by name or sku...">
+    </div>
+    <div class="col-md-2">
+        <button (click)="onSubmit(searchInput.value)" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+    </div>
 </div>
