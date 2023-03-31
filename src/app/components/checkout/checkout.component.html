@@ -1,108 +1,171 @@
-<div class="row justify-content-center">
-    <div class="row gy-2 col-md-8 h-100 ">
-        <div class="card p-0">
-            <div class="card-header">
-                <h5 class="m-0">Personal Information</h5>
-            </div>
-            <div class="card-body">
-                <form [formGroup]="checkoutFormGroup">
-                    <div formGroupName="coustomer">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input formControlName="firstName" type="text" class="form-control" id="firstName">
-                            <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
-                                <div *ngIf="firstName?.errors?.['required']">
-                                    <div class="text-danger">First Name is required.</div>
+<div class="container mt-3">
+    <!--Personal information card-->
+    <div class="row">
+        <div class="col col-md-12">
+            <div class="card p-0">
+                <div class="card-header">
+                    <h5 class="m-0">Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="checkoutFormGroup">
+                        <div formGroupName="coustomer">
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input formControlName="firstName" type="text" class="form-control" id="firstName">
+                                <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
+                                    <div *ngIf="firstName?.errors?.['required']">
+                                        <div class="text-danger">First Name is required.</div>
+                                    </div>
                                 </div>
                             </div>
-
-
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input formControlName="lastName" type="text" class="form-control" id="lastName">
-                            <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
-                                <div *ngIf="lastName?.errors?.['required']">
-                                    <div class="text-danger">Last name is required.</div>
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input formControlName="lastName" type="text" class="form-control" id="lastName">
+                                <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
+                                    <div *ngIf="lastName?.errors?.['required']">
+                                        <div class="text-danger">Last name is required.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label">Phone Number</label>
+                                <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber">
+                                <div
+                                    *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+                                    <div *ngIf="phoneNumber?.errors?.['required']">
+                                        <div class="text-danger">Phone number is required</div>
+                                    </div>
+                                    <div
+                                        *ngIf="phoneNumber?.errors?.['minlength'] || phoneNumber?.errors?.['maxlength']">
+                                        <div class="text-danger">Phone number must contain nine digits.</div>
+                                    </div>
+                                    <div *ngIf="phoneNumber?.errors?.['pattern']">
+                                        <div class="text-danger">Phone number must contain digits only.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input formControlName="email" type="text" class="form-control" id="email">
+                                <div *ngIf="email && email.invalid && (email.dirty || email.touched)">
+                                    <div *ngIf="email?.errors?.['required']">
+                                        <div class="text-danger">Email is required.</div>
+                                    </div>
+                                    <div *ngIf="email?.errors?.['pattern']">
+                                        <div class="text-danger">Invalid email format.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber">
-                            <div
-                                *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
-                                <div *ngIf="phoneNumber?.errors?.['required']">
-                                    <div class="text-danger">Phone number is required</div>
-                                </div>
-                                <div *ngIf="phoneNumber?.errors?.['minlength'] || phoneNumber?.errors?.['maxlength']">
-                                    <div class="text-danger">Phone number must contain nine digits.</div>
-                                </div>
-                                <div *ngIf="phoneNumber?.errors?.['pattern']">
-                                    <div class="text-danger">Phone number must contain digits only.</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input formControlName="email" type="text" class="form-control" id="email">
-                            <div *ngIf="email && email.invalid && (email.dirty || email.touched)">
-                                <div *ngIf="email?.errors?.['required']">
-                                    <div class="text-danger">Email is required.</div>
-                                </div>
-                                <div *ngIf="email?.errors?.['pattern']">
-                                    <div class="text-danger">Invalid email format.</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
+    <!--Personal information card end-->
 
-        <div class="card p-0">
-            <div class="card-header">
-                <h5 class="m-0">Delivery Address</h5>
-            </div>
-            <div class="card-body">
-                <form [formGroup]="checkoutFormGroup">
-                    <div formGroupName="address">
-                        <div class="mb-3">
-                            <label for="streetAddress" class="form-label">Street Address</label>
-                            <input formControlName="streetAddress" type="text" class="form-control" id="streetAddress"
-                                placeholder="Street and home">
-                                <div *ngIf="streetAddress && streetAddress.invalid && (streetAddress.dirty || streetAddress.touched)">
+    <!--Delivery address card-->
+    <div class="row mt-3">
+        <div class="col col md-12 w-100">
+            <div class="card p-0">
+                <div class="card-header">
+                    <h5 class="m-0">Delivery Address</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="checkoutFormGroup">
+                        <div formGroupName="address">
+                            <div class="mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <input formControlName="country" type="text" class="form-control" id="country" [attr.disabled]="true">
+                            </div>
+                            <div class="mb-3">
+                                <label for="streetAddress" class="form-label">Street Address</label>
+                                <input formControlName="streetAddress" type="text" class="form-control"
+                                    id="streetAddress" placeholder="Street and home">
+                                <div
+                                    *ngIf="streetAddress && streetAddress.invalid && (streetAddress.dirty || streetAddress.touched)">
                                     <div *ngIf="streetAddress?.errors?.['required']">
                                         <div class="text-danger">Street address is required.</div>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="city" class="form-label">City</label>
-                            <input formControlName="city" type="text" class="form-control" id="city" placeholder="City">
-                            <div *ngIf="city && city.invalid && (city.dirty || city.touched)">
-                                <div *ngIf="city?.errors?.['required']">
-                                    <div class="text-danger">City is required.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">City</label>
+                                <input formControlName="city" type="text" class="form-control" id="city"
+                                    placeholder="City">
+                                <div *ngIf="city && city.invalid && (city.dirty || city.touched)">
+                                    <div *ngIf="city?.errors?.['required']">
+                                        <div class="text-danger">City is required.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="zipCode" class="form-label">Zip Code</label>
+                                <input formControlName="zipCode" type="text" class="form-control" id="zipCode"
+                                    placeholder="00-000">
+                                <div *ngIf="zipCode && zipCode.invalid && (zipCode.dirty || zipCode.touched)">
+                                    <div *ngIf="zipCode?.errors?.['required']">
+                                        <div class="text-danger">Zip code is required.</div>
+                                    </div>
+                                    <div *ngIf="zipCode?.errors?.['pattern']">
+                                        <div class="text-danger">Invalid zip code format.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="zipCode" class="form-label">Zip Code</label>
-                            <input formControlName="zipCode" type="text" class="form-control" id="zipCode"
-                                placeholder="00-000">
-                            <div *ngIf="zipCode && zipCode.invalid && (zipCode.dirty || zipCode.touched)">
-                                <div *ngIf="zipCode?.errors?.['required']">
-                                    <div class="text-danger">Zip code is required.</div>
-                                </div>
-                                <div *ngIf="zipCode?.errors?.['pattern']">
-                                    <div class="text-danger">Invalid zip code format.</div>
-                                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Delivery address card end-->
+
+    <!--summary card-->
+    <div class="row mt-3">
+        <div class="col col-md-12">
+            <div class="card p-0">
+                <div class="card-header">
+                    <h5 class="m-0">Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
+                        <div class="row align-items-center">
+                            <div class="col col-md-1">
+                                <img src="{{cartProduct.product.imageUrl}}" class="card-img img-summary" alt="placeholder">
+                            </div>
+                            <div class="col col-md-8">
+                                <p class="fw-bold">{{cartProduct.product.name}}</p>
+                                <span>{{cartProduct.product.description}}</span>
+                            </div>
+                            <div class="col col-md-2">
+                                <span class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice |
+                                    currency:
+                                    'USD'}}</span>
+                            </div>
+                            <div class="col col-md-1">
+                                <span class="text-center text-black-50">{{cartProduct.computeTotalPrice()
+                                    |
+                                    currency: 'USD'}}</span>
                             </div>
                         </div>
                     </div>
-                </form>
+                    <div class="card-body border-top border-dark mt-5">
+                        <p class="d-flex justify-content-between"><span>Products</span> <span>{{totalCartValue |
+                                currency:'USD'}}</span></p>
+                        <p class="d-flex justify-content-between"><span>Shipping</span> <span>{{shippingPrice |
+                                currency:'USD'}}</span></p>
+                        <p class="d-flex justify-content-between border-top"><span>Total price</span>
+                            <span>{{totalCartValue
+                                +
+                                shippingPrice | currency:'USD'}}</span>
+                        </p>
+                    </div>
+                    <div class="d-flex flex-row-reverse">
+                        <a routerLink="/checkout" class="btn btn-primary mt-2">ORDER</a>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
+    <!--summary card end-->
 </div>

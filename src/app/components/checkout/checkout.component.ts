@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { CartService } from 'src/app/services/cart.service';
+import { CartProduct } from 'src/app/common/cart-product';
 
 @Component({
   selector: 'app-checkout',
@@ -8,11 +10,29 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 })
 export class CheckoutComponent implements OnInit {
 
+  cartProducts: CartProduct[] = [];
+  totalCartValue: number = 0;
+  totalQuantityOfProducts: number = 0;
+  shippingPrice: number = 0;
   checkoutFormGroup!: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) { }
+  
+  constructor(private formBuilder: FormBuilder,
+              private cartService: CartService) { }
 
   ngOnInit() {
+    this.cartProducts = this.cartService.cartProducts;
+    this.handleFormGroup();
+    this.getSummaryValues();
+
+    
+  }
+
+  getSummaryValues(){
+    this.cartService.totalCartValue.subscribe((response: number) => this.totalCartValue = response);
+    this.cartService.totalQuantityOfProducts.subscribe((response: number) => this.totalQuantityOfProducts = response);
+  }
+
+  handleFormGroup(){
     this.checkoutFormGroup = this.formBuilder.group({
       coustomer: this.formBuilder.group({
         'firstName': new FormControl('', Validators.required),
@@ -21,12 +41,14 @@ export class CheckoutComponent implements OnInit {
         'email': new FormControl('',[Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)])
       }),
       address: this.formBuilder.group({
+        'country': new FormControl({value: 'Poland', disabled:true}),
         'streetAddress': new FormControl('', [Validators.required]),
         'city': new FormControl('',Validators.required),
         'zipCode': new FormControl('',[Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{3}')])
       })
-    })
+    });
   }
+
   get firstName(){
     return this.checkoutFormGroup.get('coustomer.firstName');
   }
@@ -43,6 +65,10 @@ export class CheckoutComponent implements OnInit {
     return this.checkoutFormGroup.get('coustomer.email');
   }
 
+  get country(){
+    return this.checkoutFormGroup.get('address.country');
+  }
+
   get streetAddress(){
     return this.checkoutFormGroup.get('address.streetAddress');
   }
@@ -54,4 +80,5 @@ export class CheckoutComponent implements OnInit {
   get zipCode(){
     return this.checkoutFormGroup.get('address.zipCode');
   }
+
 }
