@@ -23,8 +23,7 @@
                                 <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice |
                                     currency:
                                     'USD'}}</p>
-                                <span class="text-center border-top text-black-50">{{cartProduct.quantity *
-                                    cartProduct.product.unitPrice | currency: 'USD'}}</span>
+                                <span class="text-center border-top text-black-50">{{cartProduct.computeTotalPrice() | currency: 'USD'}}</span>
                             </div>
                             <div class="col-md-3">
                                 <div class="text-center">
