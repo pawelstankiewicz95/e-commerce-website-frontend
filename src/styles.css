@@ -34,3 +34,7 @@
   .active {
     background-color: rgb(170, 204, 243);
   }
+
+  .img-summary {
+    max-width: 100px;
+  }
