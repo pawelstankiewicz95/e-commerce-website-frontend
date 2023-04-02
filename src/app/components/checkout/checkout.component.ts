@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { CartService } from 'src/app/services/cart.service';
 import { CartProduct } from 'src/app/common/cart-product';
 
@@ -15,69 +15,77 @@ export class CheckoutComponent implements OnInit {
   totalQuantityOfProducts: number = 0;
   shippingPrice: number = 0;
   checkoutFormGroup!: FormGroup;
-  
+
   constructor(private formBuilder: FormBuilder,
-              private cartService: CartService) { }
+    private cartService: CartService) { }
 
   ngOnInit() {
     this.cartProducts = this.cartService.cartProducts;
     this.handleFormGroup();
     this.getSummaryValues();
 
-    
+
   }
 
-  getSummaryValues(){
+  getSummaryValues() {
     this.cartService.totalCartValue.subscribe((response: number) => this.totalCartValue = response);
     this.cartService.totalQuantityOfProducts.subscribe((response: number) => this.totalQuantityOfProducts = response);
   }
 
-  handleFormGroup(){
+  handleFormGroup() {
     this.checkoutFormGroup = this.formBuilder.group({
       coustomer: this.formBuilder.group({
-        'firstName': new FormControl('', Validators.required),
-        'lastName': new FormControl('', Validators.required),
-        'phoneNumber': new FormControl('',[Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
-        'email': new FormControl('',[Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)])
+        'firstName': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
+        'lastName': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
+        'phoneNumber': new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$'), this.validateWhiteSpaces]),
+        'email': new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i), this.validateWhiteSpaces])
       }),
       address: this.formBuilder.group({
-        'country': new FormControl({value: 'Poland', disabled:true}),
-        'streetAddress': new FormControl('', [Validators.required]),
-        'city': new FormControl('',Validators.required),
-        'zipCode': new FormControl('',[Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{3}')])
+        'country': new FormControl({ value: 'Poland', disabled: true }),
+        'streetAddress': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
+        'city': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
+        'zipCode': new FormControl('', [Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{3}'), this.validateWhiteSpaces])
       })
     });
   }
 
-  get firstName(){
+  validateWhiteSpaces(formControl: FormControl): ValidationErrors | null {
+    if ((formControl.value != null) && (formControl.value.trim().length === 0)) {
+      return { 'validateWhiteSpaces': true };
+    } else {
+      return null;
+    }
+  }
+
+  get firstName() {
     return this.checkoutFormGroup.get('coustomer.firstName');
   }
 
-  get lastName(){
+  get lastName() {
     return this.checkoutFormGroup.get('coustomer.lastName');
   }
 
-  get phoneNumber(){
+  get phoneNumber() {
     return this.checkoutFormGroup.get('coustomer.phoneNumber');
   }
 
-  get email(){
+  get email() {
     return this.checkoutFormGroup.get('coustomer.email');
   }
 
-  get country(){
+  get country() {
     return this.checkoutFormGroup.get('address.country');
   }
 
-  get streetAddress(){
+  get streetAddress() {
     return this.checkoutFormGroup.get('address.streetAddress');
   }
 
-  get city(){
+  get city() {
     return this.checkoutFormGroup.get('address.city');
   }
 
-  get zipCode(){
+  get zipCode() {
     return this.checkoutFormGroup.get('address.zipCode');
   }
 
