@@ -20,7 +20,7 @@ export class CartService {
     let cartProduct: CartProduct = new CartProduct(product);
     let productInCart = undefined;
     if (this.cartProducts.length > 0) {
-      productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.product.id === product.id);
+      productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.id === product.id);
 
     }
     if (productInCart != undefined) {
@@ -44,7 +44,7 @@ export class CartService {
     let computedTotalCartValue = 0;
     let computedTotalQuanity = 0;
     for (let tempCartProduct of this.cartProducts) {
-      computedTotalCartValue += tempCartProduct.product.unitPrice * tempCartProduct.quantity;
+      computedTotalCartValue += tempCartProduct.unitPrice * tempCartProduct.quantity;
       computedTotalQuanity += tempCartProduct.quantity;
     }
     this.totalCartValue.next(computedTotalCartValue);
@@ -52,7 +52,7 @@ export class CartService {
   }
 
   removeFromCart(cartProduct: CartProduct) {
-    const productIndex = this.cartProducts.findIndex(tempCartProduct => (tempCartProduct.product.id === cartProduct.product.id));
+    const productIndex = this.cartProducts.findIndex(tempCartProduct => (tempCartProduct.id === cartProduct.id));
     if (productIndex > -1) {
       this.cartProducts.splice(productIndex, 1);
     }
