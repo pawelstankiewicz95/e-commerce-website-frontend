@@ -131,14 +131,14 @@
                     <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
                         <div class="row align-items-center">
                             <div class="col col-md-1">
-                                <img src="{{cartProduct.product.imageUrl}}" class="card-img img-summary" alt="placeholder">
+                                <img src="{{cartProduct.imageUrl}}" class="card-img img-summary" alt="placeholder">
                             </div>
                             <div class="col col-md-8">
-                                <p class="fw-bold">{{cartProduct.product.name}}</p>
-                                <span>{{cartProduct.product.description}}</span>
+                                <p class="fw-bold">{{cartProduct.name}}</p>
+                                <span>{{cartProduct.description}}</span>
                             </div>
                             <div class="col col-md-2">
-                                <span class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice |
+                                <span class="text-center">{{cartProduct.quantity}} x {{cartProduct.unitPrice |
                                     currency:
                                     'USD'}}</span>
                             </div>

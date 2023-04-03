@@ -14,14 +14,14 @@
                         <div *ngFor="let cartProduct of cartProducts" class="card-body border mt-1">
                             <div class="row align-items-center">
                                 <div class="col-md-2">
-                                    <img src="{{cartProduct.product.imageUrl}}" class="card-img" alt="placeholder">
+                                    <img src="{{cartProduct.imageUrl}}" class="card-img" alt="placeholder">
                                 </div>
                                 <div class="col-md-4">
-                                    <p class="fw-bold">{{cartProduct.product.name}}</p>
-                                    <span>{{cartProduct.product.description}}</span>
+                                    <p class="fw-bold">{{cartProduct.name}}</p>
+                                    <span>{{cartProduct.description}}</span>
                                 </div>
                                 <div class="col-md-2 text-center">
-                                    <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.product.unitPrice |
+                                    <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.unitPrice |
                                         currency:
                                         'USD'}}</p>
                                     <span class="text-center border-top text-black-50">{{cartProduct.computeTotalPrice()
