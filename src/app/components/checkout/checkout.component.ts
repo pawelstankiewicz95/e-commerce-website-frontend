@@ -30,6 +30,10 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
     this.clearCart();
     this.router.navigateByUrl("/order-info");
 
