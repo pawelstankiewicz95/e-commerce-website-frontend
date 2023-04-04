@@ -46,7 +46,7 @@ export class CheckoutComponent implements OnInit {
 
   handleFormGroup() {
     this.checkoutFormGroup = this.formBuilder.group({
-      coustomer: this.formBuilder.group({
+      customer: this.formBuilder.group({
         'firstName': new FormControl('', Validators.required),
         'lastName': new FormControl('', Validators.required),
         'phoneNumber': new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
@@ -72,15 +72,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   get lastName() {
-    return this.checkoutFormGroup.get('coustomer.lastName');
+    return this.checkoutFormGroup.get('customer.lastName');
   }
 
   get phoneNumber() {
-    return this.checkoutFormGroup.get('coustomer.phoneNumber');
+    return this.checkoutFormGroup.get('customer.phoneNumber');
   }
 
   get email() {
-    return this.checkoutFormGroup.get('coustomer.email');
+    return this.checkoutFormGroup.get('customer.email');
   }
 
   get country() {
