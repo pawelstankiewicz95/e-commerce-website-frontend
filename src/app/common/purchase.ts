@@ -5,8 +5,9 @@ import { Summary } from "./summary";
 
 export class Purchase {
     
-    customer!: Customer;
-    shippingAddress!: ShippingAddress;
-    summary! : Summary;
-    orderProducts!: OrderProduct[];
+    constructor(private customer: Customer,
+        private shippingAddress: ShippingAddress,
+        private summary: Summary,
+        private orderProducts: OrderProduct[]) { }
+
 }
