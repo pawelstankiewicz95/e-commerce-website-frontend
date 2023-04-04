@@ -3,6 +3,12 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { CartService } from 'src/app/services/cart.service';
 import { CartProduct } from 'src/app/common/cart-product';
 import { Router } from '@angular/router';
+import { Customer } from 'src/app/common/customer';
+import { ShippingAddress } from 'src/app/common/shipping-address';
+import { OrderProduct } from 'src/app/common/order-product';
+import { Summary } from 'src/app/common/summary';
+import { Purchase } from 'src/app/common/purchase';
+import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
   selector: 'app-checkout',
@@ -19,7 +25,8 @@ export class CheckoutComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private cartService: CartService,
-    private router: Router) { };
+    private router: Router,
+    private checkoutService: CheckoutService) { };
 
   ngOnInit() {
     this.cartProducts = this.cartService.cartProducts;
@@ -34,9 +41,29 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.markAllAsTouched();
       return;
     }
-    this.clearCart();
-    this.router.navigateByUrl("/order-info");
 
+    let customer = new Customer();
+    customer = this.checkoutFormGroup.controls['customer'].value;
+
+    let shippingAddress = new ShippingAddress();
+    shippingAddress = this.checkoutFormGroup.controls['address'].value;
+
+    let orderProducts: OrderProduct[] = this.cartProducts.map(cartProduct => new OrderProduct(cartProduct));
+
+    let summary = new Summary();
+    summary.totalCartValue = this.totalCartValue;
+    summary.totalQuantityOfProducts = this.totalQuantityOfProducts;
+
+    let purchase = new Purchase(customer, shippingAddress, summary, orderProducts);
+
+    this.checkoutService.saveOrder(purchase).subscribe({
+      next: response => {
+        console.log(response),
+          this.clearCart,
+          this.router.navigateByUrl("/order-info")
+      },
+      error: error => { alert(`There was an error: ${error.message}`) }
+    });
   }
 
   getSummaryValues() {
