@@ -13,7 +13,7 @@
                                 <label for="firstName" class="form-label">First Name</label>
                                 <input formControlName="firstName" type="text" class="form-control" id="firstName">
                                 <div *ngIf="firstName && firstName.invalid && (firstName.dirty || firstName.touched)">
-                                    <div *ngIf="firstName?.errors?.['required']">
+                                    <div *ngIf="firstName?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">First Name is required.</div>
                                     </div>
                                 </div>
@@ -22,7 +22,7 @@
                                 <label for="lastName" class="form-label">Last Name</label>
                                 <input formControlName="lastName" type="text" class="form-control" id="lastName">
                                 <div *ngIf="lastName && lastName.invalid && (lastName.dirty || lastName.touched)">
-                                    <div *ngIf="lastName?.errors?.['required']">
+                                    <div *ngIf="lastName?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">Last name is required.</div>
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                 <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber">
                                 <div
                                     *ngIf="phoneNumber && phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
-                                    <div *ngIf="phoneNumber?.errors?.['required']">
+                                    <div *ngIf="phoneNumber?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">Phone number is required</div>
                                     </div>
                                     <div
@@ -48,7 +48,7 @@
                                 <label for="email" class="form-label">Email</label>
                                 <input formControlName="email" type="text" class="form-control" id="email">
                                 <div *ngIf="email && email.invalid && (email.dirty || email.touched)">
-                                    <div *ngIf="email?.errors?.['required']">
+                                    <div *ngIf="email?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">Email is required.</div>
                                     </div>
                                     <div *ngIf="email?.errors?.['pattern']">
@@ -84,7 +84,7 @@
                                     id="streetAddress" placeholder="Street and home">
                                 <div
                                     *ngIf="streetAddress && streetAddress.invalid && (streetAddress.dirty || streetAddress.touched)">
-                                    <div *ngIf="streetAddress?.errors?.['required']">
+                                    <div *ngIf="streetAddress?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">Street address is required.</div>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                 <input formControlName="city" type="text" class="form-control" id="city"
                                     placeholder="City">
                                 <div *ngIf="city && city.invalid && (city.dirty || city.touched)">
-                                    <div *ngIf="city?.errors?.['required']">
+                                    <div *ngIf="city?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">City is required.</div>
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@
                                 <input formControlName="zipCode" type="text" class="form-control" id="zipCode"
                                     placeholder="00-000">
                                 <div *ngIf="zipCode && zipCode.invalid && (zipCode.dirty || zipCode.touched)">
-                                    <div *ngIf="zipCode?.errors?.['required']">
+                                    <div *ngIf="zipCode?.errors?.['required'] || firstName?.errors?.['validateWhiteSpaces']">
                                         <div class="text-danger">Zip code is required.</div>
                                     </div>
                                     <div *ngIf="zipCode?.errors?.['pattern']">
