@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { CartService } from 'src/app/services/cart.service';
 import { CartProduct } from 'src/app/common/cart-product';
+import { Router } from '@angular/router';
+import { Customer } from 'src/app/common/customer';
+import { ShippingAddress } from 'src/app/common/shipping-address';
+import { OrderProduct } from 'src/app/common/order-product';
+import { Summary } from 'src/app/common/summary';
+import { Purchase } from 'src/app/common/purchase';
+import { CheckoutService } from 'src/app/services/checkout.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,7 +24,9 @@ export class CheckoutComponent implements OnInit {
   checkoutFormGroup!: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-    private cartService: CartService) { }
+    private cartService: CartService,
+    private router: Router,
+    private checkoutService: CheckoutService) { };
 
   ngOnInit() {
     this.cartProducts = this.cartService.cartProducts;
@@ -27,6 +36,36 @@ export class CheckoutComponent implements OnInit {
 
   }
 
+  onSubmit() {
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
+
+    let customer = new Customer();
+    customer = this.checkoutFormGroup.controls['customer'].value;
+
+    let shippingAddress = new ShippingAddress();
+    shippingAddress = this.checkoutFormGroup.controls['address'].value;
+
+    let orderProducts: OrderProduct[] = this.cartProducts.map(cartProduct => new OrderProduct(cartProduct));
+
+    let summary = new Summary();
+    summary.totalCartValue = this.totalCartValue;
+    summary.totalQuantityOfProducts = this.totalQuantityOfProducts;
+
+    let purchase = new Purchase(customer, shippingAddress, summary, orderProducts);
+
+    this.checkoutService.saveOrder(purchase).subscribe({
+      next: response => {
+        console.log(response),
+          this.clearCart(),
+          this.router.navigateByUrl("/order-info")
+      },
+      error: error => { alert(`There was an error: ${error.message}`) }
+    });
+  }
+
   getSummaryValues() {
     this.cartService.totalCartValue.subscribe((response: number) => this.totalCartValue = response);
     this.cartService.totalQuantityOfProducts.subscribe((response: number) => this.totalQuantityOfProducts = response);
@@ -34,27 +73,25 @@ export class CheckoutComponent implements OnInit {
 
   handleFormGroup() {
     this.checkoutFormGroup = this.formBuilder.group({
-      coustomer: this.formBuilder.group({
-        'firstName': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
-        'lastName': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
-        'phoneNumber': new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$'), this.validateWhiteSpaces]),
-        'email': new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i), this.validateWhiteSpaces])
+      customer: this.formBuilder.group({
+        'firstName': new FormControl('', Validators.required),
+        'lastName': new FormControl('', Validators.required),
+        'phoneNumber': new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
+        'email': new FormControl('', [Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)])
       }),
       address: this.formBuilder.group({
         'country': new FormControl({ value: 'Poland', disabled: true }),
-        'streetAddress': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
-        'city': new FormControl('', [Validators.required, this.validateWhiteSpaces]),
-        'zipCode': new FormControl('', [Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{3}'), this.validateWhiteSpaces])
+        'streetAddress': new FormControl('', [Validators.required]),
+        'city': new FormControl('', Validators.required),
+        'zipCode': new FormControl('', [Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{3}')])
       })
     });
   }
 
-  validateWhiteSpaces(formControl: FormControl): ValidationErrors | null {
-    if ((formControl.value != null) && (formControl.value.trim().length === 0)) {
-      return { 'validateWhiteSpaces': true };
-    } else {
-      return null;
-    }
+  clearCart() {
+    this.cartService.clearCart();
+    this.cartProducts = this.cartService.cartProducts;
+    this.cartService.computeCartContent();
   }
 
   get firstName() {
@@ -62,15 +99,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   get lastName() {
-    return this.checkoutFormGroup.get('coustomer.lastName');
+    return this.checkoutFormGroup.get('customer.lastName');
   }
 
   get phoneNumber() {
-    return this.checkoutFormGroup.get('coustomer.phoneNumber');
+    return this.checkoutFormGroup.get('customer.phoneNumber');
   }
 
   get email() {
-    return this.checkoutFormGroup.get('coustomer.email');
+    return this.checkoutFormGroup.get('customer.email');
   }
 
   get country() {

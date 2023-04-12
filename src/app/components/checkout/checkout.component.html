@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-body">
                     <form [formGroup]="checkoutFormGroup">
-                        <div formGroupName="coustomer">
+                        <div formGroupName="customer">
                             <div class="mb-3">
                                 <label for="firstName" class="form-label">First Name</label>
                                 <input formControlName="firstName" type="text" class="form-control" id="firstName">
@@ -161,7 +161,7 @@
                         </p>
                     </div>
                     <div class="d-flex flex-row-reverse">
-                        <a routerLink="/checkout" class="btn btn-primary mt-2">ORDER</a>
+                        <button (click)="onSubmit()" class="btn btn-primary mt-2">ORDER</button>
                     </div>
                 </div>
             </div>
