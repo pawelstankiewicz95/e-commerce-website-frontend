@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { LoginComponent } from './components/login/login.component';
+import { LoginBarComponent } from './components/login-bar/login-bar.component';
 const routes: Routes = [
   { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
@@ -40,7 +41,8 @@ const routes: Routes = [
     CheckoutComponent,
     TopNavBarComponent,
     OrderInfoComponent,
-    LoginComponent
+    LoginComponent,
+    LoginBarComponent
   ],
   imports: [
     HttpClientModule,
