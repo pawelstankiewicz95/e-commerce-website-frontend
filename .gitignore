@@ -100,3 +100,6 @@ baseline.json
 # Husky
 .husky/_
 aio/content/examples/.DS_Store
+
+# Sensitive data
+src/app/config/app-config.ts
