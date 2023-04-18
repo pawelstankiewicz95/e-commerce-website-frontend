@@ -17,12 +17,26 @@ import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.compone
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginBarComponent } from './components/login-bar/login-bar.component';
+
+import {
+  OktaAuthModule,
+  OKTA_CONFIG
+} from '@okta/okta-angular';
+
+import { OktaAuth } from '@okta/okta-auth-js';
+
+import appConfig from './config/app-config';
+
+const oktaConfig = appConfig.oidc;
+
+const oktaAuth = new OktaAuth(oktaConfig);
+
 const routes: Routes = [
   { path: 'search/', redirectTo: '/products', pathMatch: 'full' },
   { path: 'search/:searchParam', component: ProductListComponent },
   { path: 'category/:id', component: ProductListComponent },
   { path: 'product-details/:productId', component: ProductDetailsComponent },
-  { path: 'cart', component: CartComponent},
+  { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-info', component: OrderInfoComponent },
@@ -48,9 +62,10 @@ const routes: Routes = [
     HttpClientModule,
     BrowserModule,
     RouterModule.forRoot(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OktaAuthModule
   ],
-  providers: [ProductService],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth }}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
