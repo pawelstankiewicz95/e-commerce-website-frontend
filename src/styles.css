@@ -38,3 +38,7 @@
   .img-summary {
     max-width: 100px;
   }
+
+  .user-name{
+    display: inline;
+  }
