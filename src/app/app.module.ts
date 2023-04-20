@@ -20,6 +20,7 @@ import { LoginBarComponent } from './components/login-bar/login-bar.component';
 
 import {
   OktaAuthModule,
+  OktaCallbackComponent,
   OKTA_CONFIG
 } from '@okta/okta-angular';
 
@@ -40,6 +41,8 @@ const routes: Routes = [
   { path: 'products', component: ProductListComponent },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-info', component: OrderInfoComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'login/callback', component: OktaCallbackComponent },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
 ];
@@ -65,7 +68,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth }}],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
