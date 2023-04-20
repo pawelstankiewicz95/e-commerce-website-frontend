@@ -1,4 +1,4 @@
 <div>
-    <div *ngIf="isAuthenticated"><a>Hello {{userName}}</a> <button class="btn btn-primary" (click)="logout()">Logout</button></div>
+    <div *ngIf="isAuthenticated"><h5 class="user-name align-middle me-2">Hello {{userName}}!</h5> <button class="btn btn-primary" (click)="logout()">Logout</button></div>
     <div *ngIf="!isAuthenticated"><button class="btn btn-primary" routerLink="/login">Login</button></div>
 </div>
