@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CartProduct } from '../common/cart-product';
 import { Product } from '../common/product';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Cart } from '../common/cart';
 
 
 @Injectable({
@@ -13,9 +15,10 @@ export class CartService {
   totalQuantityOfProducts: Subject<number> = new BehaviorSubject<number>(0);
   cartProducts: CartProduct[] = [];
   storage: Storage = localStorage;
-  constructor() {
+  private apiServerUrl = 'http://localhost:8082/api/cart'
+  constructor(private httpClient: HttpClient) {
     this.getFromStorage();
-   }
+  }
 
   addToCart(product: Product) {
     let cartProduct: CartProduct = new CartProduct(product);
@@ -61,15 +64,32 @@ export class CartService {
     this.computeCartContent();
   }
 
-  persistToStorage(){
+  persistToStorage() {
     this.storage.setItem('cartProducts', JSON.stringify(this.cartProducts));
   }
 
-  getFromStorage(){
+  getFromStorage() {
     let cartProductsFromStorage = JSON.parse(this.storage.getItem('cartProducts')!);
-    if (cartProductsFromStorage != null){
+    if (cartProductsFromStorage != null) {
       this.cartProducts = cartProductsFromStorage;
       this.computeCartContent();
     }
+  }
+
+  clearStorage() {
+    this.storage.clear();
+  }
+
+  saveCart(cart: Cart): Observable<any> {
+    return this.httpClient.post<Cart>(this.apiServerUrl, cart);
+  }
+
+  getCartByEmail(email: string): Observable<Cart> {
+    return this.httpClient.get<Cart>(`${this.apiServerUrl}/${email}`);
+  }
+
+  bindCartProducts(cartProducts: CartProduct[]){
+    this.cartProducts = cartProducts;
+   // this.computeCartContent();
   }
 }
