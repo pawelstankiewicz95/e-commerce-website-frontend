@@ -1,13 +1,11 @@
 import { Product } from "./product";
 
 export class CartProduct {
-    quantity: number;
-
     id: number;
+    quantity: number;
     name: string;
     description: string;
     unitPrice: number;
-    unitsInStock: number;
     imageUrl: string;
 
     constructor(product: Product) {
@@ -16,11 +14,6 @@ export class CartProduct {
         this.name = product.name;
         this.description = product.description;
         this.unitPrice = product.unitPrice;
-        this.unitsInStock = product.unitsInStock;
         this.imageUrl = product.imageUrl;
     };
-
-    computeTotalPrice(): number{
-        return this.quantity * this.unitPrice;
-    }
 }
