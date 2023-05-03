@@ -4,6 +4,8 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import OktaSignIn from '@okta/okta-signin-widget';
 
 import appConfig from '../../config/app-config';
+import { CartService } from 'src/app/services/cart.service';
+import { Cart } from 'src/app/common/cart';
 
 @Component({
   selector: 'app-login',
@@ -25,24 +27,32 @@ export class LoginComponent implements OnInit {
         issuer: appConfig.oidc.issuer,
         scopes: appConfig.oidc.scopes
       },
-      features: { registration:true }
+      features: { registration: true }
     });
-   }
+  }
 
   ngOnInit(): void {
     this.oktaSignin.remove();
-
     this.oktaSignin.renderEl({
-      el: '#okta-signin-widget'},
+      el: '#okta-signin-widget'
+    },
       (response: any) => {
         if (response.status === 'SUCCESS') {
-          this.oktaAuth.signInWithRedirect();
+          this.signIn();
         }
       },
       (error: any) => {
         throw error;
       }
     );
+    //   this.oktaAuth.getUser().then((result) => this.userEmail = result.email as string);
+    // this.cartService.getCartByEmail(this.userEmail).subscribe((response: Cart) => this.cart = response);
+    //  this.cartService.bindCartProducts(this.cart.cartProducts)
+    // this.cartService.computeCartContent();
   }
+  public async signIn(): Promise<void> {
+    await this.oktaAuth.signInWithRedirect();
+  }
+
 
 }
