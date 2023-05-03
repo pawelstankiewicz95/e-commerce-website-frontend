@@ -27,6 +27,7 @@ import {
 import { OktaAuth } from '@okta/okta-auth-js';
 
 import appConfig from './config/app-config';
+import { CustomLoingCallbackComponent } from './components/custom-login-callback-component/custom-login-callback.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -42,7 +43,7 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-info', component: OrderInfoComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'login/callback', component: OktaCallbackComponent },
+  { path: 'login/callback', component: CustomLoingCallbackComponent },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
 ];
@@ -59,7 +60,8 @@ const routes: Routes = [
     TopNavBarComponent,
     OrderInfoComponent,
     LoginComponent,
-    LoginBarComponent
+    LoginBarComponent,
+    CustomLoingCallbackComponent
   ],
   imports: [
     HttpClientModule,
