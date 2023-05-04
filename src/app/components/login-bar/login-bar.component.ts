@@ -50,7 +50,9 @@ export class LoginBarComponent implements OnInit {
 
   async logout() {
     try {
+      await lastValueFrom(this.cartService.deleteCartByEmail(this.userEmail));
       await lastValueFrom(this.saveCart());
+
     } catch (e) {
       console.log(e);
     }
