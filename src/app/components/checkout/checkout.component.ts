@@ -49,6 +49,7 @@ export class CheckoutComponent implements OnInit {
     shippingAddress = this.checkoutFormGroup.controls['address'].value;
 
     let orderProducts: OrderProduct[] = this.cartProducts.map(cartProduct => new OrderProduct(cartProduct));
+    console.log(orderProducts);
 
     let summary = new Summary();
     summary.totalCartValue = this.totalCartValue;
@@ -86,6 +87,9 @@ export class CheckoutComponent implements OnInit {
         'zipCode': new FormControl('', [Validators.required, Validators.pattern('^[0-9]{2}-[0-9]{3}')])
       })
     });
+  }
+  computeTotalProductPrice(cartProduct: CartProduct): number {
+    return cartProduct.quantity * cartProduct.unitPrice;
   }
 
   clearCart() {

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CartProduct } from 'src/app/common/cart-product';
 import { CartService } from 'src/app/services/cart.service';
+
 
 @Component({
   selector: 'app-cart',
@@ -31,7 +33,7 @@ export class CartComponent {
     this.cartService.computeCartContent();
   }
 
-  decreaseProductQuantity(cartProduct: CartProduct){
+  decreaseProductQuantity(cartProduct: CartProduct) {
     cartProduct.quantity--;
     this.cartService.computeCartContent();
   }
@@ -41,9 +43,13 @@ export class CartComponent {
     this.cartProducts = this.cartService.cartProducts;
     this.cartService.computeCartContent();
   }
-  removeFromCart(cartProduct: CartProduct){
+  removeFromCart(cartProduct: CartProduct) {
     this.cartService.removeFromCart(cartProduct);
     this.cartProducts = this.cartService.cartProducts;
     this.cartService.computeCartContent();
+  }
+
+  computeTotalProductPrice(cartProduct: CartProduct): number {
+    return cartProduct.quantity * cartProduct.unitPrice;
   }
 }

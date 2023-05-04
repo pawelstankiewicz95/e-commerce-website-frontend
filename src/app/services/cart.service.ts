@@ -1,7 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, OnInit } from '@angular/core';
 import { CartProduct } from '../common/cart-product';
 import { Product } from '../common/product';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Cart } from '../common/cart';
+import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
+import OktaAuth from '@okta/okta-auth-js';
 
 
 @Injectable({
@@ -13,9 +17,14 @@ export class CartService {
   totalQuantityOfProducts: Subject<number> = new BehaviorSubject<number>(0);
   cartProducts: CartProduct[] = [];
   storage: Storage = localStorage;
-  constructor() {
-    this.getFromStorage();
-   }
+  userEmail: string = '';
+  isAuthenticated: boolean = false;
+  storageCartProducts: string = 'storageCartProducts';
+
+  private apiServerUrl = 'http://localhost:8082/api/cart'
+  constructor(private httpClient: HttpClient, private oktaAuthService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
+    this.getFromStorage(this.storageCartProducts);
+  }
 
   addToCart(product: Product) {
     let cartProduct: CartProduct = new CartProduct(product);
@@ -50,7 +59,7 @@ export class CartService {
     }
     this.totalCartValue.next(computedTotalCartValue);
     this.totalQuantityOfProducts.next(computedTotalQuanity);
-    this.persistToStorage();
+    this.persistToStorage(this.cartProducts, this.storageCartProducts);
   }
 
   removeFromCart(cartProduct: CartProduct) {
@@ -61,15 +70,46 @@ export class CartService {
     this.computeCartContent();
   }
 
-  persistToStorage(){
-    this.storage.setItem('cartProducts', JSON.stringify(this.cartProducts));
+  persistToStorage(cartProducts: CartProduct[], itemName: string) {
+    this.storage.setItem(itemName, JSON.stringify(cartProducts));
   }
 
-  getFromStorage(){
-    let cartProductsFromStorage = JSON.parse(this.storage.getItem('cartProducts')!);
-    if (cartProductsFromStorage != null){
+  getFromStorage(storageItem: string) {
+
+    let cartProductsFromStorage = JSON.parse(this.storage.getItem(storageItem)!);
+    if (cartProductsFromStorage != null) {
       this.cartProducts = cartProductsFromStorage;
       this.computeCartContent();
     }
   }
+
+  clearStorage() {
+    this.storage.clear();
+  }
+
+  saveCart(cart: Cart): Observable<any> {
+    return this.httpClient.post<Cart>(this.apiServerUrl, cart);
+  }
+
+  getCartByEmail(email: string): Observable<Cart> {
+    return this.httpClient.get<Cart>(`${this.apiServerUrl}/${email}`);
+  }
+
+  public deleteCartByEmail(email: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiServerUrl}/${email}`);
+  }
+
+  getCartProducts() {
+    this.getFromStorage(this.storageCartProducts);
+  }
+
+  async getCartFromDb() {
+    const user = await this.oktaAuth.getUser();
+    const email = user.email;
+    const cart = await lastValueFrom(this.getCartByEmail(email!));
+    this.cartProducts = cart.cartProducts;
+    this.computeCartContent();
+    this.getFromStorage(this.storageCartProducts);
+  }
+
 }
