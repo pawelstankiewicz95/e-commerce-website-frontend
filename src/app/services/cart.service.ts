@@ -95,6 +95,10 @@ export class CartService {
     return this.httpClient.get<Cart>(`${this.apiServerUrl}/${email}`);
   }
 
+  public deleteCartByEmail(email: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiServerUrl}/${email}`);
+  }
+
   getCartProducts() {
     this.getFromStorage(this.storageCartProducts);
   }
