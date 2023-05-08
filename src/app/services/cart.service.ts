@@ -107,9 +107,12 @@ export class CartService {
     const user = await this.oktaAuth.getUser();
     const email = user.email;
     const cart = await lastValueFrom(this.getCartByEmail(email!));
-    this.cartProducts = cart.cartProducts;
-    this.computeCartContent();
-    this.getFromStorage(this.storageCartProducts);
+    if (cart != null) {
+      this.cartProducts = cart.cartProducts;
+      this.computeCartContent();
+    } else {
+      this.getFromStorage(this.storageCartProducts)
+    };
   }
 
 }
