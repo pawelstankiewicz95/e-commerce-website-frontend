@@ -39,4 +39,7 @@ export class CartProductService {
   public getCartProductsByUserEmail(userEmail: string): Observable<CartProduct[]> {
     return this.httpClient.get<CartProduct[]>(`${this.apiServerUrl}/${userEmail}`);
   }
+  public saveCartProductToCart(cartProduct: CartProduct, userEmail: String) {
+    return this.httpClient.post<CartProduct>(`${this.apiServerUrl}/${userEmail}`, cartProduct);
+  }
 }
