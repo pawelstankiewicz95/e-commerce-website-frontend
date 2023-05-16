@@ -50,10 +50,12 @@ export class CartService {
       this.increaseProductQuantity(productInCart);
     } else {
       this.cartProducts.push(cartProduct);
-      this.cartProductService.saveCartProductToCart(cartProduct, this.userEmail).subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error)
-      });
+      if (this.isAuthenticated) {
+        this.cartProductService.saveCartProductToCart(cartProduct, this.userEmail).subscribe({
+          next: (response) => console.log(response),
+          error: (error) => console.log(error)
+        });
+      }
     }
     this.computeCartContent();
   }
@@ -64,6 +66,12 @@ export class CartService {
 
   clearCart() {
     this.cartProducts = [];
+    if (this.isAuthenticated){
+    this.deleteCartByEmail(this.userEmail).subscribe({
+      next: (response) => console.log(response),
+      error: (error) => console.log(error)
+    });
+  }
   }
 
   computeCartContent() {
