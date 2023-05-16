@@ -38,24 +38,7 @@ export class LoginBarComponent implements OnInit {
     }
   }
 
-  saveCart() {
-    this.cartProducts = this.cartService.cartProducts;
-    this.cartService.computeCartContent();
-    let user: User = new User();
-    user.email = this.userEmail;
-    let cart: Cart = new Cart(user, this.cartProducts);
-    console.log(cart);
-    return this.cartService.saveCart(cart);
-  }
-
   async logout() {
-    try {
-      await lastValueFrom(this.cartService.deleteCartByEmail(this.userEmail));
-      await lastValueFrom(this.saveCart());
-
-    } catch (e) {
-      console.log(e);
-    }
     await this.oktaAuth.signOut();
   }
 }

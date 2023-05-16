@@ -6,12 +6,16 @@ import { HttpClient } from '@angular/common/http';
 import { Cart } from '../common/cart';
 import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
 import OktaAuth from '@okta/okta-auth-js';
+import { ProductCategoryService } from './product-category.service';
+import { CartProductService } from './cart-product.service';
+import { User } from '../common/user';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+
 
   totalCartValue: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantityOfProducts: Subject<number> = new BehaviorSubject<number>(0);
@@ -22,8 +26,18 @@ export class CartService {
   storageCartProducts: string = 'storageCartProducts';
 
   private apiServerUrl = 'http://localhost:8082/api/cart'
-  constructor(private httpClient: HttpClient, private oktaAuthService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) {
+  constructor(private httpClient: HttpClient,
+    private oktaAuthService: OktaAuthStateService,
+    @Inject(OKTA_AUTH) private oktaAuth: OktaAuth,
+    private cartProductService: CartProductService) {
     this.getFromStorage(this.storageCartProducts);
+
+    this.oktaAuthService.authState$.subscribe((response) => {
+      this.isAuthenticated = response.isAuthenticated!;
+      if (this.isAuthenticated) {
+        this.oktaAuth.getUser().then((result) => this.userEmail = result.email as string)
+      }
+    })
   }
 
   addToCart(product: Product) {
@@ -31,14 +45,18 @@ export class CartService {
     let productInCart = undefined;
     if (this.cartProducts.length > 0) {
       productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.id === product.id);
-
     }
     if (productInCart != undefined) {
-      productInCart.quantity++;
+      this.increaseProductQuantity(productInCart);
     } else {
       this.cartProducts.push(cartProduct);
+      if (this.isAuthenticated) {
+        this.cartProductService.saveCartProductToCart(cartProduct, this.userEmail).subscribe({
+          next: (response) => console.log(response),
+          error: (error) => console.log(error)
+        });
+      }
     }
-
     this.computeCartContent();
   }
 
@@ -48,6 +66,12 @@ export class CartService {
 
   clearCart() {
     this.cartProducts = [];
+    if (this.isAuthenticated){
+    this.deleteCartByEmail(this.userEmail).subscribe({
+      next: (response) => console.log(response),
+      error: (error) => console.log(error)
+    });
+  }
   }
 
   computeCartContent() {
@@ -66,6 +90,12 @@ export class CartService {
     const productIndex = this.cartProducts.findIndex(tempCartProduct => (tempCartProduct.id === cartProduct.id));
     if (productIndex > -1) {
       this.cartProducts.splice(productIndex, 1);
+      if (this.isAuthenticated) {
+        this.cartProductService.deleteCartProduct(this.userEmail, cartProduct.id).subscribe({
+          next: (response) => console.log(response),
+          error: (error) => console.log(error)
+        });
+      }
     }
     this.computeCartContent();
   }
@@ -87,7 +117,7 @@ export class CartService {
     this.storage.clear();
   }
 
-  saveCart(cart: Cart): Observable<any> {
+  saveCart(cart: Cart): Observable<Cart> {
     return this.httpClient.post<Cart>(this.apiServerUrl, cart);
   }
 
@@ -113,6 +143,27 @@ export class CartService {
     } else {
       this.getFromStorage(this.storageCartProducts)
     };
+  }
+
+  increaseProductQuantity(cartProduct: CartProduct) {
+    cartProduct.quantity++;
+    if (this.isAuthenticated) {
+      this.cartProductService.increaseCartProductQuantity(this.userEmail, cartProduct.id).subscribe({
+        next: response => console.log(response),
+        error: error => console.error(error)
+      })
+    };
+    this.computeCartContent();
+  }
+  decreaseProductQuantity(cartProduct: CartProduct) {
+    cartProduct.quantity--;
+    if (this.isAuthenticated) {
+      this.cartProductService.decreaseCartProductQuantity(this.userEmail, cartProduct.id).subscribe({
+        next: response => console.log(response),
+        error: error => console.error(error)
+      })
+    };
+    this.computeCartContent();
   }
 
 }
