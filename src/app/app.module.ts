@@ -29,6 +29,7 @@ import { OktaAuth } from '@okta/okta-auth-js';
 import appConfig from './config/app-config';
 import { CustomLoingCallbackComponent } from './components/custom-login-callback-component/custom-login-callback.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
+import { CartProductService } from './services/cart-product.service';
 
 const oktaConfig = appConfig.oidc;
 
@@ -71,7 +72,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, CartProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

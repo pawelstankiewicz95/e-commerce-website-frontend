@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
+import OktaAuth from '@okta/okta-auth-js';
 import { Observable } from 'rxjs';
 import { CartProduct } from 'src/app/common/cart-product';
+import { CartProductService } from 'src/app/services/cart-product.service';
 import { CartService } from 'src/app/services/cart.service';
 
 
@@ -29,13 +32,11 @@ export class CartComponent {
   }
 
   increaseProductQuantity(cartProduct: CartProduct) {
-    cartProduct.quantity++;
-    this.cartService.computeCartContent();
+    this.cartService.increaseProductQuantity(cartProduct);
   }
 
   decreaseProductQuantity(cartProduct: CartProduct) {
-    cartProduct.quantity--;
-    this.cartService.computeCartContent();
+    this.cartService.decreaseProductQuantity(cartProduct);
   }
 
   clearCart() {
