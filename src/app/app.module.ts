@@ -21,7 +21,8 @@ import { LoginBarComponent } from './components/login-bar/login-bar.component';
 import {
   OktaAuthModule,
   OktaCallbackComponent,
-  OKTA_CONFIG
+  OKTA_CONFIG,
+  OktaAuthGuard
 } from '@okta/okta-angular';
 
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -47,6 +48,14 @@ const routes: Routes = [
   { path: 'order-info', component: OrderInfoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/callback', component: CustomLoingCallbackComponent },
+  { path: 'product-crud', component: ProductCrudComponent, canActivate: [OktaAuthGuard],
+    data: {
+      oktaGuardConfig: {
+        // Set the required groups for admin access
+        groups: ['admin'],
+      },
+    }
+  },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
 ];
