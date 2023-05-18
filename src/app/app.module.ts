@@ -33,6 +33,7 @@ import appConfig from './config/app-config';
 import { CustomLoingCallbackComponent } from './components/custom-login-callback-component/custom-login-callback.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { CartProductService } from './services/cart-product.service';
+import { ProductCategoryCrudComponent } from './components/product-category-crud/product-category-crud.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -86,7 +87,8 @@ const routes: Routes = [
     LoginBarComponent,
     CustomLoingCallbackComponent,
     ProductCrudComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    ProductCategoryCrudComponent
   ],
   imports: [
     HttpClientModule,
