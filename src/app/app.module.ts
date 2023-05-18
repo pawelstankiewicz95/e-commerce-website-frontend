@@ -17,6 +17,8 @@ import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.compone
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginBarComponent } from './components/login-bar/login-bar.component';
+import { ProductCrudComponent } from './components/product-crud/product-crud.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 import {
   OktaAuthModule,
@@ -31,7 +33,6 @@ import appConfig from './config/app-config';
 import { CustomLoingCallbackComponent } from './components/custom-login-callback-component/custom-login-callback.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { CartProductService } from './services/cart-product.service';
-import { ProductCrudComponent } from './components/product-crud/product-crud.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -48,7 +49,17 @@ const routes: Routes = [
   { path: 'order-info', component: OrderInfoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/callback', component: CustomLoingCallbackComponent },
-  { path: 'product-crud', component: ProductCrudComponent, canActivate: [OktaAuthGuard],
+  {
+    path: 'product-crud', component: ProductCrudComponent, canActivate: [OktaAuthGuard],
+    data: {
+      oktaGuardConfig: {
+        // Set the required groups for admin access
+        groups: ['admin'],
+      },
+    }
+  },
+  {
+    path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
       oktaGuardConfig: {
         // Set the required groups for admin access
@@ -74,7 +85,8 @@ const routes: Routes = [
     LoginComponent,
     LoginBarComponent,
     CustomLoingCallbackComponent,
-    ProductCrudComponent
+    ProductCrudComponent,
+    AdminDashboardComponent
   ],
   imports: [
     HttpClientModule,

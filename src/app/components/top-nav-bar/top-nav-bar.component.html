@@ -3,5 +3,6 @@
         <div><app-search></app-search></div>
         <div><app-cart-bar></app-cart-bar></div>
         <div><app-login-bar></app-login-bar></div>
+        <div *ngIf="isAdmin == true"><button class="btn btn-success" routerLink="/admin-dashboard">Admin Dashboard</button></div>
     </div>
 </nav>
