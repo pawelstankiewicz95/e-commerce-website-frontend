@@ -1,0 +1,20 @@
+<div>
+    <div class="row g-3 align-items-center justify-content-center mt-2">
+        <div class="col-auto">
+            <select class="form-select" [formControl]="category" (change)="onChange()">
+                <option [value]="defaultValue" selected disabled hidden>Select Category</option>
+
+                <option *ngFor="let category of categories" [ngValue]="category">{{category.categoryName}}</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <label for="inputCategory" class="col-form-label">New name: </label>
+        </div>
+        <div class="col-auto">
+            <input type="text" id="inputCategory" class="form-control" [formControl]="categoryNameForm">
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-dark" (click)="updateCategory()">Update</button>
+        </div>
+    </div>
+</div>

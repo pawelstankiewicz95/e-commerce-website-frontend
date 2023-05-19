@@ -35,6 +35,7 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { CartProductService } from './services/cart-product.service';
 import { ProductCategoryCrudComponent } from './components/product-category-crud/product-category-crud.component';
 import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -53,18 +54,14 @@ const routes: Routes = [
   { path: 'login/callback', component: CustomLoingCallbackComponent },
   {
     path: 'product-crud', component: ProductCrudComponent,
-
     canActivate: [OktaAuthGuard], data: { oktaGuardConfig: { groups: ['admin'] } }
   },
-  //{
-  //  path: 'add-category', component: AddNewCategoryComponent,
-  //  canActivate: [OktaAuthGuard], data: { oktaGuardConfig: { groups: ['admin'] } }
- // },
   {
     path: 'product-category-crud', component: ProductCategoryCrudComponent, canActivate: [OktaAuthGuard],
     data: { oktaGuardConfig: { groups: ['admin'] } },
-    children: [{ path: 'add-category', component: AddNewCategoryComponent }],
-    
+    children: [{ path: 'add-category', component: AddNewCategoryComponent },
+                { path:'update-category', component: UpdateCategoryComponent}],
+
   },
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
@@ -96,7 +93,8 @@ const routes: Routes = [
     ProductCrudComponent,
     AdminDashboardComponent,
     ProductCategoryCrudComponent,
-    AddNewCategoryComponent
+    AddNewCategoryComponent,
+    UpdateCategoryComponent
   ],
   imports: [
     HttpClientModule,

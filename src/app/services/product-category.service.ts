@@ -18,4 +18,8 @@ export class ProductCategoryService {
   public saveProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
     return this.httpClient.post<ProductCategory>(this.apiServerUrl, productCategory);
   }
+
+  public updateProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
+    return this.httpClient.put<ProductCategory>(this.apiServerUrl, productCategory);
+  }
 }
