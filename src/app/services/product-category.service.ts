@@ -14,4 +14,8 @@ export class ProductCategoryService {
   public getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<ProductCategory[]>(this.apiServerUrl);
   }
+
+  public saveProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
+    return this.httpClient.post<ProductCategory>(this.apiServerUrl, productCategory);
+  }
 }
