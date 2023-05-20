@@ -36,6 +36,7 @@ import { CartProductService } from './services/cart-product.service';
 import { ProductCategoryCrudComponent } from './components/product-category-crud/product-category-crud.component';
 import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
+import { ProductCategoryUpdateService } from './services/product-category-update.service';
 
 const oktaConfig = appConfig.oidc;
 
@@ -103,7 +104,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, CartProductService],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, CartProductService, ProductCategoryUpdateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
