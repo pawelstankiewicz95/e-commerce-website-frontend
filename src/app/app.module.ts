@@ -17,7 +17,6 @@ import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.compone
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginBarComponent } from './components/login-bar/login-bar.component';
-import { ProductCrudComponent } from './components/product-crud/product-crud.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 import {
@@ -38,6 +37,7 @@ import { AddNewCategoryComponent } from './components/add-new-category/add-new-c
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 import { ProductCategoryUpdateService } from './services/product-category-update.service';
 import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
+import { ProductSettingsComponent } from './components/product-settings/product-settings.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -55,7 +55,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login/callback', component: CustomLoingCallbackComponent },
   {
-    path: 'product-crud', component: ProductCrudComponent,
+    path: 'add-product', component: AddProductComponent,
     canActivate: [OktaAuthGuard], data: { oktaGuardConfig: { groups: ['admin'] } }
   },
   {
@@ -64,8 +64,14 @@ const routes: Routes = [
     children: [
       { path: 'add-category', component: AddNewCategoryComponent },
       { path: 'update-category', component: UpdateCategoryComponent },
-      { path: 'delete-category', component: DeleteCategoryComponent }],
-
+      { path: 'delete-category', component: DeleteCategoryComponent }]
+  },
+  {
+    path: 'product-settings', component: ProductSettingsComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin'] } },
+    children: [
+      { path: 'add-product', component: AddProductComponent },
+    ]
   },
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
@@ -94,12 +100,13 @@ const routes: Routes = [
     LoginComponent,
     LoginBarComponent,
     CustomLoingCallbackComponent,
-    ProductCrudComponent,
     AdminDashboardComponent,
     ProductCategoryCrudComponent,
     AddNewCategoryComponent,
     UpdateCategoryComponent,
-    DeleteCategoryComponent
+    DeleteCategoryComponent,
+    AddProductComponent,
+    ProductSettingsComponent
   ],
   imports: [
     HttpClientModule,
