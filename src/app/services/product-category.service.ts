@@ -22,4 +22,8 @@ export class ProductCategoryService {
   public updateProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
     return this.httpClient.put<ProductCategory>(this.apiServerUrl, productCategory);
   }
+
+  public deleteProductCategory(categoryId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiServerUrl}/${categoryId}`);
+  }
 }

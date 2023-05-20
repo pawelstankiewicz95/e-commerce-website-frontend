@@ -37,6 +37,7 @@ import { ProductCategoryCrudComponent } from './components/product-category-crud
 import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 import { ProductCategoryUpdateService } from './services/product-category-update.service';
+import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -60,8 +61,10 @@ const routes: Routes = [
   {
     path: 'product-category-crud', component: ProductCategoryCrudComponent, canActivate: [OktaAuthGuard],
     data: { oktaGuardConfig: { groups: ['admin'] } },
-    children: [{ path: 'add-category', component: AddNewCategoryComponent },
-                { path:'update-category', component: UpdateCategoryComponent}],
+    children: [
+      { path: 'add-category', component: AddNewCategoryComponent },
+      { path: 'update-category', component: UpdateCategoryComponent },
+      { path: 'delete-category', component: DeleteCategoryComponent }],
 
   },
   {
@@ -95,7 +98,8 @@ const routes: Routes = [
     AdminDashboardComponent,
     ProductCategoryCrudComponent,
     AddNewCategoryComponent,
-    UpdateCategoryComponent
+    UpdateCategoryComponent,
+    DeleteCategoryComponent
   ],
   imports: [
     HttpClientModule,
