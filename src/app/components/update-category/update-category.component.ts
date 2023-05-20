@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ProductCategory } from 'src/app/common/product-category';
+import { ProductCategoryUpdateService } from 'src/app/services/product-category-update.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
 
 @Component({
@@ -15,11 +16,17 @@ export class UpdateCategoryComponent {
   categories: ProductCategory[] = [];
   categoryName: string = '';
 
-  constructor(private productCategoryService: ProductCategoryService) {
+  constructor(private productCategoryService: ProductCategoryService,
+    private productCategoryUpdateService: ProductCategoryUpdateService) {
   }
   ngOnInit() {
     this.getCategories();
     this.handleForm();
+    this.productCategoryUpdateService.productCategoriesUpdated$.subscribe(
+      (productCategories: ProductCategory[]) => {
+        this.categories = productCategories;
+      }
+    );
   }
 
   handleForm() {
@@ -40,7 +47,10 @@ export class UpdateCategoryComponent {
     let productCategory = this.category.value;
     const newProductCategory = new ProductCategory(productCategory.id, categoryName);
     this.productCategoryService.updateProductCategory(newProductCategory).subscribe({
-      next: (response) => console.log(response),
+      next: (response) => {
+        console.log(response);
+        this.updateProductCategories();
+      },
       error: (error) => console.log(error)
     });
   }
@@ -50,6 +60,12 @@ export class UpdateCategoryComponent {
     this.categoryName = productCategory.categoryName;
     this.categoryNameForm.setValue(this.categoryName);
     console.log(productCategory.categoryName);
+  }
+
+  updateProductCategories(): void {
+    this.productCategoryService.getProductCategories().subscribe((response: ProductCategory[]) => {
+      this.productCategoryUpdateService.announceProductCategoriesUpdate(response);
+    });
   }
 
 }
