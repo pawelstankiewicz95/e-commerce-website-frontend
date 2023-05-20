@@ -37,6 +37,7 @@ import { AddNewCategoryComponent } from './components/add-new-category/add-new-c
 import { UpdateCategoryComponent } from './components/update-category/update-category.component';
 import { ProductCategoryUpdateService } from './services/product-category-update.service';
 import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
 import { ProductSettingsComponent } from './components/product-settings/product-settings.component';
 
 const oktaConfig = appConfig.oidc;
