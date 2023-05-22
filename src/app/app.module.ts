@@ -17,11 +17,13 @@ import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.compone
 import { OrderInfoComponent } from './components/order-info/order-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginBarComponent } from './components/login-bar/login-bar.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 import {
   OktaAuthModule,
   OktaCallbackComponent,
-  OKTA_CONFIG
+  OKTA_CONFIG,
+  OktaAuthGuard
 } from '@okta/okta-angular';
 
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -30,6 +32,13 @@ import appConfig from './config/app-config';
 import { CustomLoingCallbackComponent } from './components/custom-login-callback-component/custom-login-callback.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { CartProductService } from './services/cart-product.service';
+import { ProductCategoryCrudComponent } from './components/product-category-crud/product-category-crud.component';
+import { AddNewCategoryComponent } from './components/add-new-category/add-new-category.component';
+import { UpdateCategoryComponent } from './components/update-category/update-category.component';
+import { ProductCategoryUpdateService } from './services/product-category-update.service';
+import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
+import { ProductSettingsComponent } from './components/product-settings/product-settings.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -46,6 +55,34 @@ const routes: Routes = [
   { path: 'order-info', component: OrderInfoComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/callback', component: CustomLoingCallbackComponent },
+  {
+    path: 'add-product', component: AddProductComponent,
+    canActivate: [OktaAuthGuard], data: { oktaGuardConfig: { groups: ['admin'] } }
+  },
+  {
+    path: 'product-category-crud', component: ProductCategoryCrudComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin'] } },
+    children: [
+      { path: 'add-category', component: AddNewCategoryComponent },
+      { path: 'update-category', component: UpdateCategoryComponent },
+      { path: 'delete-category', component: DeleteCategoryComponent }]
+  },
+  {
+    path: 'product-settings', component: ProductSettingsComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin'] } },
+    children: [
+      { path: 'add-product', component: AddProductComponent },
+    ]
+  },
+  {
+    path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
+    data: {
+      oktaGuardConfig: {
+        // Set the required groups for admin access
+        groups: ['admin'],
+      },
+    }
+  },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent }
 ];
@@ -63,7 +100,14 @@ const routes: Routes = [
     OrderInfoComponent,
     LoginComponent,
     LoginBarComponent,
-    CustomLoingCallbackComponent
+    CustomLoingCallbackComponent,
+    AdminDashboardComponent,
+    ProductCategoryCrudComponent,
+    AddNewCategoryComponent,
+    UpdateCategoryComponent,
+    DeleteCategoryComponent,
+    AddProductComponent,
+    ProductSettingsComponent
   ],
   imports: [
     HttpClientModule,
@@ -72,7 +116,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, CartProductService],
+  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, CartProductService, ProductCategoryUpdateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
