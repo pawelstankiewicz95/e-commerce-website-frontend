@@ -6,9 +6,10 @@
         <h5 class="card-title">{{product.name}}</h5>
         <p class="card-text">{{product.description}}</p>
         <div class="mt-auto">
-          <a routerLink="/product-details/{{ product.id }}" class="btn btn-primary me-2">Details</a>
+          <a routerLink="/product-details/{{product.id}}" class="btn btn-primary me-2">Details</a>
           <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
-          <button *ngIf="isAdmin" (click)="deleteProduct(product.id)" class="btn btn-danger mt-2">Delete</button>
+          <button *ngIf="isAdmin" (click)="deleteProduct(product.id)" class="btn btn-danger mt-2 me-2">Delete</button>
+          <button *ngIf="isAdmin" routerLink="/update-product/{{product.id}}" class="btn btn-danger mt-2">Update</button>
         </div>
       </div>
     </div>
