@@ -39,6 +39,8 @@ import { ProductCategoryUpdateService } from './services/product-category-update
 import { DeleteCategoryComponent } from './components/delete-category/delete-category.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { ProductSettingsComponent } from './components/product-settings/product-settings.component';
+import { UpdateProductComponent } from './components/update-product/update-product.component';
+import { ProductCategoryService } from './services/product-category.service';
 
 const oktaConfig = appConfig.oidc;
 
@@ -56,7 +58,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login/callback', component: CustomLoingCallbackComponent },
   {
-    path: 'add-product', component: AddProductComponent,
+    path: 'update-product/:productId', component: UpdateProductComponent,
     canActivate: [OktaAuthGuard], data: { oktaGuardConfig: { groups: ['admin'] } }
   },
   {
@@ -78,7 +80,6 @@ const routes: Routes = [
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
       oktaGuardConfig: {
-        // Set the required groups for admin access
         groups: ['admin'],
       },
     }
@@ -107,7 +108,8 @@ const routes: Routes = [
     UpdateCategoryComponent,
     DeleteCategoryComponent,
     AddProductComponent,
-    ProductSettingsComponent
+    ProductSettingsComponent,
+    UpdateProductComponent
   ],
   imports: [
     HttpClientModule,
@@ -116,7 +118,14 @@ const routes: Routes = [
     ReactiveFormsModule,
     OktaAuthModule
   ],
-  providers: [ProductService, { provide: OKTA_CONFIG, useValue: { oktaAuth } }, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, CartProductService, ProductCategoryUpdateService],
+  providers: [
+    ProductService,
+    { provide: OKTA_CONFIG, useValue: { oktaAuth } },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    CartProductService,
+    ProductCategoryUpdateService,
+    ProductCategoryService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
