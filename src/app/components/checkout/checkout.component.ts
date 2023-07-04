@@ -7,8 +7,8 @@ import { Customer } from 'src/app/common/customer';
 import { ShippingAddress } from 'src/app/common/shipping-address';
 import { OrderProduct } from 'src/app/common/order-product';
 import { Summary } from 'src/app/common/summary';
-import { Purchase } from 'src/app/common/purchase';
-import { CheckoutService } from 'src/app/services/checkout.service';
+import { Order } from 'src/app/common/order';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -26,7 +26,7 @@ export class CheckoutComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private cartService: CartService,
     private router: Router,
-    private checkoutService: CheckoutService) { };
+    private orderService: OrderService) { };
 
   ngOnInit() {
     this.cartProducts = this.cartService.cartProducts;
@@ -55,9 +55,9 @@ export class CheckoutComponent implements OnInit {
     summary.totalCartValue = this.totalCartValue;
     summary.totalQuantityOfProducts = this.totalQuantityOfProducts;
 
-    let purchase = new Purchase(customer, shippingAddress, summary, orderProducts);
+    let order = new Order(customer, shippingAddress, summary, orderProducts);
 
-    this.checkoutService.saveOrder(purchase).subscribe({
+    this.orderService.saveOrder(order).subscribe({
       next: response => {
         console.log(response),
           this.clearCart(),
