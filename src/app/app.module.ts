@@ -41,6 +41,8 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { ProductSettingsComponent } from './components/product-settings/product-settings.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { ProductCategoryService } from './services/product-category.service';
+import { AllOrdersComponent } from './components/all-orders/all-orders.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -77,6 +79,13 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'all-orders', component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin'] } },
+   // children: [
+   //   { path: 'add-product', component: AddProductComponent },
+   // ]
+  },
+  {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
       oktaGuardConfig: {
@@ -85,7 +94,8 @@ const routes: Routes = [
     }
   },
   { path: '', component: ProductListComponent },
-  { path: '**', component: ProductListComponent }
+  { path: '**', component: ProductListComponent },
+ 
 ];
 @NgModule({
   declarations: [
@@ -109,7 +119,9 @@ const routes: Routes = [
     DeleteCategoryComponent,
     AddProductComponent,
     ProductSettingsComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    AllOrdersComponent,
+    OrderDetailsComponent
   ],
   imports: [
     HttpClientModule,

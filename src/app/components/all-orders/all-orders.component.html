@@ -1,0 +1,18 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Customer Email</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orders">
+            <th scope="row">{{order.id}}</th>
+            <td>{{order.customer.email}}</td>
+            <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
+            <td> <button class="btn btn-outline-dark" (click)="getDetails()">Details</button></td>
+        </tr>
+    </tbody>
+</table>
