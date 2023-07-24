@@ -54,6 +54,7 @@ export class CheckoutComponent implements OnInit {
     let summary = new Summary();
     summary.totalCartValue = this.totalCartValue;
     summary.totalQuantityOfProducts = this.totalQuantityOfProducts;
+    summary.shippingPrice = this.shippingPrice;
 
     let order = new Order(customer, shippingAddress, summary, orderProducts);
 
