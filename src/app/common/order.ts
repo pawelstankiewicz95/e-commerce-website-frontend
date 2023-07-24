@@ -2,6 +2,7 @@ import { Customer } from "./customer";
 import { OrderProduct } from "./order-product";
 import { ShippingAddress } from "./shipping-address";
 import { Summary } from "./summary";
+import { User } from "./user";
 
 export class Order {
 
@@ -9,6 +10,7 @@ export class Order {
     public customer: Customer;
     public shippingAddress: ShippingAddress;
     public summary: Summary;
+    public user!: User;
     public orderProducts: OrderProduct[]
 
     constructor(customer: Customer, shippingAddress: ShippingAddress, summary: Summary, orderProducts: OrderProduct[]) {
