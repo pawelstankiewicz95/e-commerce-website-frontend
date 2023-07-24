@@ -1,7 +1,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">ID</th>
+            <th scope="col">Order ID</th>
             <th scope="col">Customer Email</th>
             <th scope="col">Customer Name</th>
             <th scope="col">Details</th>
@@ -12,7 +12,7 @@
             <th scope="row">{{order.id}}</th>
             <td>{{order.customer.email}}</td>
             <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
-            <td> <button class="btn btn-outline-dark" (click)="getDetails()">Details</button></td>
+            <td> <a routerLink="/order-details/{{order.id}}" class="btn btn-primary me-2">Details</a></td>
         </tr>
     </tbody>
 </table>
