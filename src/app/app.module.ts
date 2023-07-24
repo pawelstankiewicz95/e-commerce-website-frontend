@@ -43,6 +43,7 @@ import { UpdateProductComponent } from './components/update-product/update-produ
 import { ProductCategoryService } from './services/product-category.service';
 import { AllOrdersComponent } from './components/all-orders/all-orders.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -72,19 +73,22 @@ const routes: Routes = [
       { path: 'delete-category', component: DeleteCategoryComponent }]
   },
   {
-    path: 'product-settings', component: ProductSettingsComponent, canActivate: [OktaAuthGuard],
+    path: 'product-settings', component: ProductSettingsComponent,
     data: { oktaGuardConfig: { groups: ['admin'] } },
     children: [
       { path: 'add-product', component: AddProductComponent },
     ]
   },
   {
-    path: 'all-orders', component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+    path: 'order-dashboard', component: OrderDashboardComponent, canActivate: [OktaAuthGuard],
     data: { oktaGuardConfig: { groups: ['admin'] } },
-   // children: [
-   //   { path: 'add-product', component: AddProductComponent },
-   // ]
+    children: [{
+      path: 'all-orders', component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } } },
+    ]
   },
+
+  { path: 'order-details/:id', component: OrderDetailsComponent },
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
@@ -95,7 +99,7 @@ const routes: Routes = [
   },
   { path: '', component: ProductListComponent },
   { path: '**', component: ProductListComponent },
- 
+
 ];
 @NgModule({
   declarations: [
@@ -121,7 +125,8 @@ const routes: Routes = [
     ProductSettingsComponent,
     UpdateProductComponent,
     AllOrdersComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    OrderDashboardComponent
   ],
   imports: [
     HttpClientModule,
