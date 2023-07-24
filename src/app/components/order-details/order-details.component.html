@@ -1,0 +1,54 @@
+<div class="card">
+  <h5 class="card-header">Order ID: {{order.id}}</h5>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="m-0">User Details</h5>
+    </div>
+    <div class="card-body">
+      PLACEHOLDER
+    </div>
+  </div>
+  <!--summary card-->
+ 
+      <div class="card p-0 mt-3">
+        <div class="card-header">
+          <h5 class="m-0">Order Summary</h5>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let orderProduct of order.orderProducts" class="card-body border mt-1">
+            <div class="row align-items-center">
+              <div class="col col-md-1">
+                <img src="{{orderProduct.imageUrl}}" class="card-img img-summary" alt="placeholder">
+              </div>
+              <div class="col col-md-8">
+                <p class="fw-bold">{{orderProduct.name}}</p>
+                <span>{{orderProduct.description}}</span>
+              </div>
+              <div class="col col-md-2">
+                <span class="text-center">{{orderProduct.quantity}} x {{orderProduct.unitPrice |
+                  currency:
+                  'USD'}}</span>
+              </div>
+              <div class="col col-md-1">
+                <span class="text-center text-black-50">{{1
+                  |
+                  currency: 'USD'}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-body border-top border-dark mt-5">
+            <p class="d-flex justify-content-between"><span>Products</span> <span>{{order.summary.totalCartValue |
+                currency:'USD'}}</span></p>
+            <p class="d-flex justify-content-between"><span>Shipping</span> <span>{{order.summary.shippingPrice |
+                currency:'USD'}}</span></p>
+            <p class="d-flex justify-content-between border-top"><span>Total price</span>
+              <span>{{order.summary.totalCartValue
+                +
+                order.summary.shippingPrice | currency:'USD'}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+   
+  <!--summary card end-->
+</div>
