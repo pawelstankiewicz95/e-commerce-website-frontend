@@ -10,13 +10,14 @@ export class Order {
     public customer: Customer;
     public shippingAddress: ShippingAddress;
     public summary: Summary;
-    public user!: User;
+    public user: User;
     public orderProducts: OrderProduct[]
 
-    constructor(customer: Customer, shippingAddress: ShippingAddress, summary: Summary, orderProducts: OrderProduct[]) {
+    constructor(customer: Customer, shippingAddress: ShippingAddress, summary: Summary, user: User, orderProducts: OrderProduct[]) {
         this.customer = customer;
         this.shippingAddress = shippingAddress;
         this.summary = summary;
+        this.user = user;
         this.orderProducts = orderProducts;
     }
 
