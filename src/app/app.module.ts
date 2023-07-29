@@ -84,7 +84,12 @@ const routes: Routes = [
     data: { oktaGuardConfig: { groups: ['admin'] } },
     children: [{
       path: 'all-orders', component: AllOrdersComponent, canActivate: [OktaAuthGuard],
-      data: { oktaGuardConfig: { groups: ['admin'] } } },
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    }
     ]
   },
 
