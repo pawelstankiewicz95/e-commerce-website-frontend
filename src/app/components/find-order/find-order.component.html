@@ -1,0 +1,33 @@
+<div class="container mt-3">
+  <form class="" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-10">
+        <input type="text" id="searchQuery" formControlName="query" class="form-control" placeholder="Find order"
+          required>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-auto">
+        <div class="">
+          <input type="radio" id="byCustomer" formControlName="searchType" value="option1">
+          <label for="byCustomer">By Customer</label>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="">
+          <input type="radio" id="byId" formControlName="searchType" value="option2">
+          <label for="byId">By order ID</label>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="">
+          <input type="radio" id="byUser" formControlName="searchType" value="option3">
+          <label for="byUser">By User</label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
