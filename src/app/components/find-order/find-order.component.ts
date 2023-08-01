@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-find-order',
@@ -10,7 +12,7 @@ export class FindOrderComponent {
   searchForm!: FormGroup;
   submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private orderService: OrderService, private router: Router) { }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
@@ -21,26 +23,27 @@ export class FindOrderComponent {
 
   onSubmit() {
     this.submitted = true;
-    if (this.searchForm.value.searchType === 'option1') {
-        this.option1Function();
-    } else if (this.searchForm.value.searchType === 'option2') {
-      this.option2Function();
+    if (this.searchForm.value.searchType === 'byCustomer') {
+      this.findOrderByCustomerLastName(this.searchForm.value.query);
+    } else if (this.searchForm.value.searchType === 'byOrderId') {
+      this.findOrderByOrderId(this.searchForm.value.query);
     }
-    else if (this.searchForm.value.searchType === 'option3') {
-      this.option3Function();
+    else if (this.searchForm.value.searchType === 'byUser') {
+      this.findOrderByUser(this.searchForm.value.query);
     }
   }
 
 
-  option1Function() {
-    return 'Result from Option 1 function';
+  findOrderByCustomerLastName(name: string) {
+    this.router.navigateByUrl(`/find-order/by-customer/${name}`)
   }
 
-  option2Function() {
-    return 'Result from Option 2 function';
+  findOrderByOrderId(id: number) {
+    this.router.navigateByUrl(`/find-order/by-id/${id}`)
   }
 
-  option3Function() {
-    return 'Result from Option 2 function';
+  findOrderByUser(user: string) {
+    this.router.navigateByUrl(`/order-dashboard/find-order/by-user/${user}`)
   }
+
 }

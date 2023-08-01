@@ -44,6 +44,8 @@ import { ProductCategoryService } from './services/product-category.service';
 import { AllOrdersComponent } from './components/all-orders/all-orders.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
+import { FindOrderComponent } from './components/find-order/find-order.component';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -87,13 +89,22 @@ const routes: Routes = [
       data: { oktaGuardConfig: { groups: ['admin'] } }
     },
     {
+      path: 'find-order', component: FindOrderComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
       path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: `find-order/by-user/:userName`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
       data: { oktaGuardConfig: { groups: ['admin'] } }
     }
     ]
   },
 
   { path: 'order-details/:id', component: OrderDetailsComponent },
+  { path: 'user-orders/:userEmail', component: UserOrdersComponent },
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
@@ -131,7 +142,9 @@ const routes: Routes = [
     UpdateProductComponent,
     AllOrdersComponent,
     OrderDetailsComponent,
-    OrderDashboardComponent
+    OrderDashboardComponent,
+    FindOrderComponent,
+    UserOrdersComponent
   ],
   imports: [
     HttpClientModule,
