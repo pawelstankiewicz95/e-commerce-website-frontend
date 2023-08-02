@@ -39,7 +39,7 @@ export class FindOrderComponent {
   }
 
   findOrderByOrderId(id: number) {
-    this.router.navigateByUrl(`/find-order/by-id/${id}`)
+    this.router.navigateByUrl(`/order-dashboard/find-order/by-id/${id}`)
   }
 
   findOrderByUser(user: string) {
