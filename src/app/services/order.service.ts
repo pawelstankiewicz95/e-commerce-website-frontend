@@ -27,4 +27,8 @@ export class OrderService {
   getOrderByUser(userEmail: string): Observable<Order[]> {
     return this.httpClient.get<Order[]>(`${this.apiServerUrl}/user`, { params: { userEmail: userEmail } });
   }
+
+  getOrderByCustomer(customerEmail: string): Observable<Order[]> {
+    return this.httpClient.get<Order[]>(`${this.apiServerUrl}/customer`, { params: { customerEmail: customerEmail } });
+  }
 }
