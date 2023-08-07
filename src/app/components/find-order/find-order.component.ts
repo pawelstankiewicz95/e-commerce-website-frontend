@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrderService } from 'src/app/services/order.service';
 
@@ -10,32 +10,63 @@ import { OrderService } from 'src/app/services/order.service';
 })
 export class FindOrderComponent {
   searchForm!: FormGroup;
-  submitted: boolean = false;
-
   constructor(private formBuilder: FormBuilder, private orderService: OrderService, private router: Router) { }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
-      query: ['', Validators.required],
-      searchType: ['option1']
+      query: ['', this.getRequiredValidator('byCustomer')], // Corrected this line
+      searchType: ['byCustomer']
     });
   }
 
   onSubmit() {
-    this.submitted = true;
-    if (this.searchForm.value.searchType === 'byCustomer') {
-      this.findOrderByCustomerLastName(this.searchForm.value.query);
-    } else if (this.searchForm.value.searchType === 'byOrderId') {
-      this.findOrderByOrderId(this.searchForm.value.query);
+    if (this.searchForm.invalid) {
+      this.searchForm.markAllAsTouched();
+      return;
     }
-    else if (this.searchForm.value.searchType === 'byUser') {
-      this.findOrderByUser(this.searchForm.value.query);
+    const searchType = this.searchForm.value.searchType;
+    const query = this.searchForm.value.query;
+    if (searchType === 'byCustomer') {
+      this.findOrderByCustomerLastName(query);
+    } else if (searchType === 'byOrderId') {
+      this.findOrderByOrderId(query);
     }
+    else if (searchType === 'byUser') {
+      this.findOrderByUser(query);
+    }
+  }
+
+  onChange() {
+    const searchType = this.searchForm.value.searchType;
+    const validators = this.getRequiredValidator(searchType);
+
+    this.query!.setValidators(validators);
+    this.query!.reset();
+  }
+
+  getRequiredValidator(type: string): ValidatorFn[] {
+    const validators: ValidatorFn[] = [];
+    if (type === 'byCustomer' || type === 'byUser') {
+      validators.push(Validators.required);
+    }
+    if (type === 'byOrderId') {
+      validators.push(Validators.required, this.numberValidator());
+    }
+
+    
+    return validators;
+  }
+
+  numberValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid = /^\d+$/.test(control.value);
+      return valid ? null : { 'numberInvalid': true };
+    };
   }
 
 
   findOrderByCustomerLastName(name: string) {
-    this.router.navigateByUrl(`/find-order/by-customer/${name}`)
+    this.router.navigateByUrl(`/order-dashboard/find-order/by-customer/${name}`)
   }
 
   findOrderByOrderId(id: number) {
@@ -44,6 +75,10 @@ export class FindOrderComponent {
 
   findOrderByUser(user: string) {
     this.router.navigateByUrl(`/order-dashboard/find-order/by-user/${user}`)
+  }
+
+  get query() {
+    return this.searchForm.get('query');
   }
 
 }
