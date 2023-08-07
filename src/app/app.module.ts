@@ -103,6 +103,10 @@ const routes: Routes = [
     {
       path: `find-order/by-id/:orderId`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
       data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: `find-order/by-customer/:customerEmail`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
     }
     ]
   },
