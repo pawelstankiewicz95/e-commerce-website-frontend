@@ -15,8 +15,10 @@ export class AllOrdersComponent {
   order!: Order;
   hasUserName: boolean = false;
   hasOrderId: boolean = false;
+  hasCustomerEmail: boolean = false;
   orderId!: number;
   userName: string = '';
+  customerEmail: string = '';
   isNoSuchElementException: boolean = false;
 
 
@@ -37,18 +39,21 @@ export class AllOrdersComponent {
 
   public handleShowingOrders() {
     this.hasUserName = this.route.snapshot.paramMap.has('userName');
+    this.hasOrderId = this.route.snapshot.paramMap.has('orderId');
+    this.hasCustomerEmail = this.route.snapshot.paramMap.has('customerEmail');
     if (this.hasUserName) {
       this.getOrdersByUser();
     }
-    this.hasOrderId = this.route.snapshot.paramMap.has('orderId');
     if (this.hasOrderId) {
       this.getOrderById();
-    } else {
+    }
+
+    if (this.hasCustomerEmail) {
+      this.getOrdersByCustomer();
+    }
+    if (!(this.hasOrderId) && !(this.hasUserName) && !(this.hasCustomerEmail)) {
       this.getOrders();
     }
-    // if (!(this.hasSearchParameter) && !(this.hasCategoryId)) {
-    //   this.getProducts();
-    //  }
   }
 
   public getOrdersByUser() {
@@ -56,6 +61,16 @@ export class AllOrdersComponent {
     this.orderService.getOrderByUser(this.userName).subscribe({
       next: (response) => {
         this.orders = response, console.log(this.userName);
+      },
+      error: (error) => console.log(error)
+    });
+  }
+
+  public getOrdersByCustomer() {
+    this.customerEmail = this.route.snapshot.paramMap.get('customerEmail')!;
+    this.orderService.getOrderByCustomer(this.customerEmail).subscribe({
+      next: (response) => {
+        this.orders = response, console.log(this.customerEmail);
       },
       error: (error) => console.log(error)
     });
