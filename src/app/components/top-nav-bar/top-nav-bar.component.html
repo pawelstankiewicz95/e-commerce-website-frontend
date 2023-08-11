@@ -1,8 +1,24 @@
 <nav class="navbar navbar-light w-100" style="background-color: #f7f7f7">
-    <div class="container">
-        <div><app-search></app-search></div>
-        <div><app-cart-bar></app-cart-bar></div>
-        <div><app-login-bar></app-login-bar></div>
-        <div *ngIf="isAdmin == true"><button class="btn btn-success" routerLink="/admin-dashboard">Admin Dashboard</button></div>
+  <div class="container">
+    <div class="logo">
+      <img src="/assets/img/logo/logo.png" class="logo" alt="placeholder">
     </div>
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Categories
+      </button>
+      <ul class="dropdown-menu">
+        <div class="sidebar">
+          <app-product-category-menu></app-product-category-menu>
+        </div>
+      </ul>
+    </div>
+    <div><app-search></app-search></div>
+    <div><app-cart-bar></app-cart-bar></div>
+    <div><app-login-bar></app-login-bar></div>
+    <div *ngIf="isAuthenticated"> <button class="btn btn-outline-dark"
+        [routerLink]="['/find-order/by-user/', userEmail]">Orders</button></div>
+    <div *ngIf="isAdmin"><button class="btn btn-success" routerLink="/admin-dashboard">Admin Dashboard</button>
+    </div>
+  </div>
 </nav>
