@@ -41,6 +41,11 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { ProductSettingsComponent } from './components/product-settings/product-settings.component';
 import { UpdateProductComponent } from './components/update-product/update-product.component';
 import { ProductCategoryService } from './services/product-category.service';
+import { AllOrdersComponent } from './components/all-orders/all-orders.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
+import { FindOrderComponent } from './components/find-order/find-order.component';
+import { UserOrdersComponent } from './components/user-orders/user-orders.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -70,12 +75,44 @@ const routes: Routes = [
       { path: 'delete-category', component: DeleteCategoryComponent }]
   },
   {
-    path: 'product-settings', component: ProductSettingsComponent, canActivate: [OktaAuthGuard],
+    path: 'product-settings', component: ProductSettingsComponent,
     data: { oktaGuardConfig: { groups: ['admin'] } },
     children: [
       { path: 'add-product', component: AddProductComponent },
     ]
   },
+  {
+    path: 'order-dashboard', component: OrderDashboardComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin'] } },
+    children: [{
+      path: 'all-orders', component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: 'find-order', component: FindOrderComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: `find-order/by-user/:userName`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: `find-order/by-id/:orderId`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    },
+    {
+      path: `find-order/by-customer/:customerEmail`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+      data: { oktaGuardConfig: { groups: ['admin'] } }
+    }
+    ]
+  },
+
+  { path: 'order-details/:id', component: OrderDetailsComponent },
+  { path: 'user-orders/:userEmail', component: UserOrdersComponent },
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
@@ -85,7 +122,8 @@ const routes: Routes = [
     }
   },
   { path: '', component: ProductListComponent },
-  { path: '**', component: ProductListComponent }
+  { path: '**', component: ProductListComponent },
+
 ];
 @NgModule({
   declarations: [
@@ -109,7 +147,12 @@ const routes: Routes = [
     DeleteCategoryComponent,
     AddProductComponent,
     ProductSettingsComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    AllOrdersComponent,
+    OrderDetailsComponent,
+    OrderDashboardComponent,
+    FindOrderComponent,
+    UserOrdersComponent
   ],
   imports: [
     HttpClientModule,

@@ -1,0 +1,42 @@
+<div class="container mt-3">
+  <form class="" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-10">
+        <input type="text" id="searchQuery" formControlName="query" class="form-control" placeholder="Find order"
+          required>
+        <div *ngIf="query && query.invalid && (query.dirty || query.touched)">
+          <div *ngIf="query?.errors?.['numberInvalid'] && !(query?.errors?.['required'])">
+            <div class="text-danger">Id must be a number!</div>
+          </div>
+          <div *ngIf="query?.errors?.['required']">
+            <div class="text-danger">Fill in search field! </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <button class="btn btn-outline-dark" type="submit">Search</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-auto">
+        <div class="">
+          <input type="radio" id="byCustomer" (change)="onChange()" formControlName="searchType" value="byCustomer">
+          <label for="byCustomer">By Customer</label>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="">
+          <input type="radio" (change)="onChange()" id="byId" formControlName="searchType" value="byOrderId">
+          <label for="byId">By order ID</label>
+        </div>
+      </div>
+      <div class="col-auto">
+        <div class="">
+          <input type="radio" (change)="onChange()" id="byUser" formControlName="searchType" value="byUser">
+          <label for="byUser">By User</label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<div>
+    <div *ngIf="isNoSuchElementException" class="alert alert-danger text-center">
+        <span class="">There is no order with id {{orderId}}.</span>
+        <!-- You can also display a user-friendly message here -->
+    </div>
+    <div *ngIf="!isNoSuchElementException">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Customer Email</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <th scope="row">{{order.id}}</th>
+                <td>{{order.customer.email}}</td>
+                <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
+                <td> <a routerLink="/order-dashboard/order-details/{{order.id}}"
+                        class="btn btn-primary me-2">Details</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

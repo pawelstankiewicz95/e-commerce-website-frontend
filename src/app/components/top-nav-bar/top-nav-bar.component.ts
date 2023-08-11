@@ -10,14 +10,26 @@ import OktaAuth from '@okta/okta-auth-js';
 export class TopNavBarComponent {
   constructor(private oktaAuthService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
 
+  userEmail: string = '';
+  userName: string ='';
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
 
   ngOnInit(): void {
     this.oktaAuthService.authState$.subscribe((response) => {
       this.isAuthenticated = response.isAuthenticated!;
-      this.checkIfIsAdmin().then((response)=> this.isAdmin = response);
+      this.getUserDetails();
+      this.checkIfIsAdmin().then((response) => this.isAdmin = response);
     })
+  }
+
+  getUserDetails(): void {
+    if (this.isAuthenticated) {
+      this.oktaAuth.getUser().then((result) => {
+        this.userEmail = result.email as string;
+        this.userName = result.name as string;
+      });
+    }
   }
 
   async checkIfIsAdmin(): Promise<boolean> {
