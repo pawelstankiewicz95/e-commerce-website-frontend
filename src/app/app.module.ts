@@ -45,7 +45,6 @@ import { AllOrdersComponent } from './components/all-orders/all-orders.component
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 import { FindOrderComponent } from './components/find-order/find-order.component';
-import { UserOrdersComponent } from './components/user-orders/user-orders.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -111,8 +110,13 @@ const routes: Routes = [
     ]
   },
 
+  {
+    path: `find-order/by-user/:userName`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin', 'user'] } }
+  },
+
   { path: 'order-details/:id', component: OrderDetailsComponent },
-  { path: 'user-orders/:userEmail', component: UserOrdersComponent },
+
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
@@ -152,7 +156,6 @@ const routes: Routes = [
     OrderDetailsComponent,
     OrderDashboardComponent,
     FindOrderComponent,
-    UserOrdersComponent
   ],
   imports: [
     HttpClientModule,
