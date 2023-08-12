@@ -1,44 +1,61 @@
-/* The sidebar menu */
-.sidebar {
-    width: 130px; 
-    position: fixed;
-    z-index: 1;
-    background-color: rgb(247, 247, 247);
-    overflow-x: hidden; 
-    height: 100%;
-    left: 0;
-    top: 0;
-  }
 
-  .sidebar a{
+.dropdown-menu a{
+  padding-bottom: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+  
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  display: block;
+}
 
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    font-size: 23px;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    display: block;
-  }
+.dropdown-menu a:hover {
+  text-decoration: underline;
+}
 
-  .sidebar a:hover {
-    color: rgb(29, 4, 165);
-  }
+.main {
+  margin-top: 54px;
+  margin-left: 170px;
+}
 
-  .main {
-    margin-left: 130px;
-  }
+.top-bar {
+  margin-left: 170px;
+}
 
-  .active {
-    background-color: rgb(170, 204, 243);
-  }
+.active {
+  text-decoration: underline !important;
+}
 
-  .img-summary {
-    max-width: 100px;
-  }
+.img-summary {
+  max-width: 100px;
+}
 
-  .user-name{
-    display: inline;
-  }
+.user-name {
+  display: inline;
+}
+
+.logo {
+
+  max-width: 200px;
+
+}
+
+.remove-margin-bottom{
+  margin-bottom: 0px;
+}
+
+.product-img{
+  max-width: 200px;
+}
+
+.login {
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.login:hover {
+  text-decoration: none;
+  color: black;
+}
+
