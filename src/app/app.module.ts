@@ -160,7 +160,10 @@ const routes: Routes = [
   imports: [
     HttpClientModule,
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top',
+      onSameUrlNavigation: 'reload'
+    }),
     ReactiveFormsModule,
     OktaAuthModule
   ],
