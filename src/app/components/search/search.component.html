@@ -1,9 +1,9 @@
-<div class="row gx-2">
-    <div class="col-md-10">
-        <input #searchInput (keyup.enter)="onSubmit(searchInput.value)" class="form-control mr-sm-2" type="text"
+
+<nav>
+      <form class="d-flex">
+        <input #searchInput (keyup.enter)="onSubmit(searchInput.value)" class="form-control" type="text"
             placeholder="Search by name or sku...">
-    </div>
-    <div class="col-md-2">
-        <button (click)="onSubmit(searchInput.value)" class="btn btn-outline-success my-2 my-sm-0">Search</button>
-    </div>
-</div>
+        <button class="btn btn-transparent border-0"  (click)="onSubmit(searchInput.value)" type="submit"><i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+  </nav>
