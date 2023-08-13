@@ -1,5 +1,5 @@
 <div>
-    <p *ngFor="let productCategory of productCategories">
+    <p *ngFor="let productCategory of productCategories; let last = last" [ngClass]="{'remove-margin-bottom' : last}">
         <a routerLink="category/{{ productCategory.id }}" routerLinkActive="active">{{ productCategory.categoryName }}</a>
     </p>
 </div>
