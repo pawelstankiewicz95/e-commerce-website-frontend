@@ -13,15 +13,6 @@
   text-decoration: underline;
 }
 
-.main {
-  margin-top: 54px;
-  margin-left: 170px;
-}
-
-.top-bar {
-  margin-left: 170px;
-}
-
 .active {
   text-decoration: underline !important;
 }
@@ -35,9 +26,7 @@
 }
 
 .logo {
-
   max-width: 200px;
-
 }
 
 .remove-margin-bottom{
@@ -58,4 +47,3 @@
   text-decoration: none;
   color: black;
 }
-
