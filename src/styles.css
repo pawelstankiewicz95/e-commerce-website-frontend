@@ -47,3 +47,18 @@
   text-decoration: none;
   color: black;
 }
+
+.button-style {
+  background-color:#ff8370;
+  border: #ff8370;
+  color: white;      
+}
+.button-style:hover {
+  background-color:#fc4d33;
+  border: #fc705a;
+  color: white;      
+}
+.button-style:active {
+  background-color: #f82808!important;
+  color: white!important;
+}

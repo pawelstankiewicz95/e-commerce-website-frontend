@@ -7,8 +7,8 @@
         <p class="card-text">{{product.description}}</p>
         <div class="mt-auto">
           <div>
-            <button routerLink="/product-details/{{product.id}}" class="btn btn-primary me-2">Details</button>
-            <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+            <button routerLink="/product-details/{{product.id}}" class="btn button-style me-2">Details</button>
+            <button (click)="addToCart(product)" class="btn button-style">Add to Cart</button>
           </div>
           <div>
             <button *ngIf="isAdmin" (click)="deleteProduct(product.id)" class="btn btn-danger mt-2 me-2">Delete</button>
