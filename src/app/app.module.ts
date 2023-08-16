@@ -45,6 +45,7 @@ import { AllOrdersComponent } from './components/all-orders/all-orders.component
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 import { FindOrderComponent } from './components/find-order/find-order.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -125,8 +126,8 @@ const routes: Routes = [
       },
     }
   },
-  { path: '', component: ProductListComponent },
-  { path: '**', component: ProductListComponent },
+  { path: '', component: HomePageComponent },
+  { path: '**', component: HomePageComponent },
 
 ];
 @NgModule({
@@ -156,6 +157,7 @@ const routes: Routes = [
     OrderDetailsComponent,
     OrderDashboardComponent,
     FindOrderComponent,
+    HomePageComponent,
   ],
   imports: [
     HttpClientModule,
