@@ -1,24 +1,38 @@
-<nav class="navbar navbar-light w-100" style="background-color: #f7f7f7">
-  <div class="container">
-    <div class="logo">
-      <img src="/assets/img/logo/logo.png" class="logo" alt="placeholder">
+<nav class="navbar navbar-light shadow-sm  mb-3 bg-body p-3 justify-content-between">
+  <div class="d-flex align-items-center">
+    <div class="me-2">
+      <a routerLink="/"><img src="/assets/img/logo/logo.png" class="logo" alt="placeholder"></a>
     </div>
-    <div class="dropdown">
-      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="dropdown me-2">
+      <button class="btn btn-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         Categories
       </button>
-      <ul class="dropdown-menu">
-        <div class="sidebar">
-          <app-product-category-menu></app-product-category-menu>
-        </div>
-      </ul>
+      <div class="dropdown-menu">
+        <app-product-category-menu></app-product-category-menu>
+      </div>
     </div>
     <div><app-search></app-search></div>
-    <div><app-cart-bar></app-cart-bar></div>
-    <div><app-login-bar></app-login-bar></div>
-    <div *ngIf="isAuthenticated"> <button class="btn btn-outline-dark"
-        [routerLink]="['/find-order/by-user/', userEmail]">Orders</button></div>
-    <div *ngIf="isAdmin"><button class="btn btn-success" routerLink="/admin-dashboard">Admin Dashboard</button>
-    </div>
   </div>
+  <div class="d-flex align-items-center">
+    <div class="border-end"><app-cart-bar></app-cart-bar></div>
+    <div *ngIf="isAuthenticated" class="dropdown ms-3">
+      <button class="btn btn-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Hello {{firstName}}!
+      </button>
+      <div class="dropdown-menu">
+        <div *ngIf="isAuthenticated">
+          <a [routerLink]="['/find-order/by-user/', userEmail]">Your Orders</a>
+        </div>
+        <div *ngIf="isAdmin">
+          <a class="text-danger" routerLink="/admin-dashboard">Admin Dashboard</a>
+        </div>
+        <div *ngIf="isAuthenticated">
+          <a routerLink (click)="logout()">Logout</a>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isAuthenticated"><a class="login ms-3" routerLink="/login">Log in</a></div>
+  </div>
+
+
 </nav>

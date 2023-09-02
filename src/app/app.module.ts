@@ -45,7 +45,7 @@ import { AllOrdersComponent } from './components/all-orders/all-orders.component
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { OrderDashboardComponent } from './components/order-dashboard/order-dashboard.component';
 import { FindOrderComponent } from './components/find-order/find-order.component';
-import { UserOrdersComponent } from './components/user-orders/user-orders.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 const oktaConfig = appConfig.oidc;
 
@@ -111,8 +111,13 @@ const routes: Routes = [
     ]
   },
 
+  {
+    path: `find-order/by-user/:userName`, component: AllOrdersComponent, canActivate: [OktaAuthGuard],
+    data: { oktaGuardConfig: { groups: ['admin', 'user'] } }
+  },
+
   { path: 'order-details/:id', component: OrderDetailsComponent },
-  { path: 'user-orders/:userEmail', component: UserOrdersComponent },
+
   {
     path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [OktaAuthGuard],
     data: {
@@ -121,8 +126,8 @@ const routes: Routes = [
       },
     }
   },
-  { path: '', component: ProductListComponent },
-  { path: '**', component: ProductListComponent },
+  { path: '', component: HomePageComponent },
+  { path: '**', component: HomePageComponent },
 
 ];
 @NgModule({
@@ -152,12 +157,15 @@ const routes: Routes = [
     OrderDetailsComponent,
     OrderDashboardComponent,
     FindOrderComponent,
-    UserOrdersComponent
+    HomePageComponent,
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top',
+      onSameUrlNavigation: 'reload'
+    }),
     ReactiveFormsModule,
     OktaAuthModule
   ],

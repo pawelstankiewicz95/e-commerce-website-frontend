@@ -11,26 +11,36 @@ export class TopNavBarComponent {
   constructor(private oktaAuthService: OktaAuthStateService, @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { }
 
   userEmail: string = '';
-  userName: string ='';
+  userName: string = '';
   isAuthenticated: boolean = false;
   isAdmin: boolean = false;
+  firstName = '';
 
   ngOnInit(): void {
     this.oktaAuthService.authState$.subscribe((response) => {
       this.isAuthenticated = response.isAuthenticated!;
-      this.getUserDetails();
       this.checkIfIsAdmin().then((response) => this.isAdmin = response);
+      this.getUserDetails();
     })
+    
+  }
+
+  async logout() {
+    await this.oktaAuth.signOut();
   }
 
   getUserDetails(): void {
     if (this.isAuthenticated) {
       this.oktaAuth.getUser().then((result) => {
         this.userEmail = result.email as string;
-        this.userName = result.name as string;
+        const userName = result.name as string;
+        const firstName = userName.split(' ')[0];
+        this.userName = userName;
+        this.firstName = firstName;
       });
     }
   }
+
 
   async checkIfIsAdmin(): Promise<boolean> {
     if (this.isAuthenticated) {
