@@ -15,7 +15,7 @@ import { CartService } from 'src/app/services/cart.service';
 export class LoginBarComponent implements OnInit {
 
   isAuthenticated: boolean = false;
-  userName: string = '';
+  firstName: string = '';
   userEmail: string = '';
   cartProducts: CartProduct[] = [];
   storage: Storage = localStorage;
@@ -33,8 +33,12 @@ export class LoginBarComponent implements OnInit {
 
   getUserDetails(): void {
     if (this.isAuthenticated) {
-      this.oktaAuth.getUser().then((result) => this.userName = result.name as string)
-      this.oktaAuth.getUser().then((result) => this.userEmail = result.email as string);
+      this.oktaAuth.getUser().then((result) => {
+        const fullName = result.name as string;
+        const firstName = fullName.split(' ')[0];
+        this.firstName = firstName;
+        this.userEmail = result.email as string;
+      });
     }
   }
 

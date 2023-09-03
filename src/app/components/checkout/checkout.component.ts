@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { CartService } from 'src/app/services/cart.service';
 import { CartProduct } from 'src/app/common/cart-product';
@@ -7,8 +7,11 @@ import { Customer } from 'src/app/common/customer';
 import { ShippingAddress } from 'src/app/common/shipping-address';
 import { OrderProduct } from 'src/app/common/order-product';
 import { Summary } from 'src/app/common/summary';
-import { Purchase } from 'src/app/common/purchase';
-import { CheckoutService } from 'src/app/services/checkout.service';
+import { Order } from 'src/app/common/order';
+import { OrderService } from 'src/app/services/order.service';
+import { User } from 'src/app/common/user';
+import { OKTA_AUTH, OktaAuthStateService } from '@okta/okta-angular';
+import OktaAuth from '@okta/okta-auth-js';
 
 @Component({
   selector: 'app-checkout',
@@ -22,18 +25,30 @@ export class CheckoutComponent implements OnInit {
   totalQuantityOfProducts: number = 0;
   shippingPrice: number = 0;
   checkoutFormGroup!: FormGroup;
+  isAuthenticated: boolean = false;
+  userName: string = 'Anonymous';
 
   constructor(private formBuilder: FormBuilder,
     private cartService: CartService,
     private router: Router,
-    private checkoutService: CheckoutService) { };
+    private orderService: OrderService,
+    private oktaAuthService: OktaAuthStateService,
+    @Inject(OKTA_AUTH) private oktaAuth: OktaAuth) { };
 
   ngOnInit() {
     this.cartProducts = this.cartService.cartProducts;
     this.handleFormGroup();
     this.getSummaryValues();
+    this.oktaAuthService.authState$.subscribe((response) => {
+      this.isAuthenticated = response.isAuthenticated!;
+      this.getUserDetails();
+    })
+  }
 
-
+  getUserDetails(): void {
+    if (this.isAuthenticated) {
+      this.oktaAuth.getUser().then((result) => this.userName = result.email as string)
+    }
   }
 
   onSubmit() {
@@ -41,6 +56,9 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.markAllAsTouched();
       return;
     }
+
+    let user = new User();
+    user.email = this.userName;
 
     let customer = new Customer();
     customer = this.checkoutFormGroup.controls['customer'].value;
@@ -54,10 +72,11 @@ export class CheckoutComponent implements OnInit {
     let summary = new Summary();
     summary.totalCartValue = this.totalCartValue;
     summary.totalQuantityOfProducts = this.totalQuantityOfProducts;
+    summary.shippingPrice = this.shippingPrice;
 
-    let purchase = new Purchase(customer, shippingAddress, summary, orderProducts);
+    let order = new Order(customer, shippingAddress, summary, user, orderProducts);
 
-    this.checkoutService.saveOrder(purchase).subscribe({
+    this.orderService.saveOrder(order).subscribe({
       next: response => {
         console.log(response),
           this.clearCart(),

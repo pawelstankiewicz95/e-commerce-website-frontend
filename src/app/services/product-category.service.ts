@@ -14,4 +14,16 @@ export class ProductCategoryService {
   public getProductCategories(): Observable<ProductCategory[]> {
     return this.httpClient.get<ProductCategory[]>(this.apiServerUrl);
   }
+
+  public saveProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
+    return this.httpClient.post<ProductCategory>(this.apiServerUrl, productCategory);
+  }
+
+  public updateProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
+    return this.httpClient.put<ProductCategory>(this.apiServerUrl, productCategory);
+  }
+
+  public deleteProductCategory(categoryId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiServerUrl}/${categoryId}`);
+  }
 }

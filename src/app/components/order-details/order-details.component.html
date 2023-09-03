@@ -1,0 +1,79 @@
+<div class="card mt-1">
+  <h5 class="card-header border-bottom-0">Order ID: {{order.id}}</h5>
+</div>
+<!--user details card-->
+<div class="card mt-3">
+  <div class="card-header">
+    <h5 class="m-0">User details</h5>
+  </div>
+  <div class="card-body">
+    <p class="mb-1"><span class="fw-bold">User:</span> {{order.user.email}} </p>
+    <p class="mb-1"><span class="fw-bold">Name:</span> {{order.customer.firstName}} {{order.customer.lastName}}</p>
+    <p class="mb-1"><span class="fw-bold">Phone number:</span> {{order.customer.phoneNumber}}</p>
+    <p class="mb-1"><span class="fw-bold">Email: </span>{{order.customer.email}}</p>
+  </div>
+</div>
+<!--user details card end-->
+
+<div class="card mt-3">
+  <div class="card-header">
+    <h5 class="m-0">Shipping address</h5>
+  </div>
+  <div class="card-body">
+    <p class="mb-1">{{order.shippingAddress.streetAddress}}</p>
+    <p class="mb-1"><span>{{order.shippingAddress.zipCode}}</span> {{order.shippingAddress.city}}</p>
+    <p class="mb-1">{{order.shippingAddress.country}}</p>
+  </div>
+</div>
+
+<!--summary card-->
+<div class="card mt-3">
+  <div class="card-header">
+    <h5 class="m-0">Ordered products</h5>
+  </div>
+  <div class="card-body">
+    <div *ngFor="let orderProduct of order.orderProducts" class="card-body border mt-1">
+      <div class="row align-items-center">
+        <div class="col col-md-1">
+          <img src="{{orderProduct.imageUrl}}" class="card-img img-summary" alt="placeholder">
+        </div>
+        <div class="col col-md-8">
+          <p class="fw-bold">{{orderProduct.name}}</p>
+          <span>{{orderProduct.description}}</span>
+        </div>
+        <div class="col col-md-2">
+          <span class="text-center">{{orderProduct.quantity}} x {{orderProduct.unitPrice |
+            currency:
+            'USD'}}</span>
+        </div>
+        <div class="col col-md-1">
+          <span class="text-center text-black-50">{{1
+            |
+            currency: 'USD'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--summary card end-->
+
+<!--costs card-->
+<div class="card mt-3">
+  <div class="card-header">
+    <h5 class="m-0">Costs</h5>
+  </div>
+  <div class="card-body">
+    <p class="d-flex justify-content-between"><span>Products</span> <span>{{order.summary.totalCartValue |
+        currency:'USD'}}</span></p>
+    <p class="d-flex justify-content-between"><span>Shipping</span> <span>{{order.summary.shippingPrice |
+        currency:'USD'}}</span></p>
+    <p class="d-flex justify-content-between border-top"><span>Total price</span>
+      <span>{{order.summary.totalCartValue
+        +
+        order.summary.shippingPrice | currency:'USD'}}</span>
+    </p>
+
+  </div>
+</div>
+
+<!--costs card-->

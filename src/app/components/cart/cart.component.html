@@ -7,7 +7,7 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class=" m-0"> Cart ({{totalQuantityOfProducts}})</h5> <button (click)="clearCart()"
-                                class="btn btn-primary">Remove all</button>
+                                class="btn button-style">Remove all</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -24,24 +24,26 @@
                                     <p class="text-center">{{cartProduct.quantity}} x {{cartProduct.unitPrice |
                                         currency:
                                         'USD'}}</p>
-                                    <span class="text-center border-top text-black-50">{{computeTotalProductPrice(cartProduct)
+                                    <span
+                                        class="text-center border-top text-black-50">{{computeTotalProductPrice(cartProduct)
                                         | currency: 'USD'}}</span>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="text-center">
                                         <button *ngIf="cartProduct.quantity > 1"
-                                            (click)="decreaseProductQuantity(cartProduct)" class="btn bg-transparent"><i
-                                                class="fa-solid fa-minus" style="color: #0d6efd;"></i></button>
-                                        <button *ngIf="cartProduct.quantity <= 1" class="btn bg-transparent">
-                                            <i class="fa-solid fa-minus" style="color: #c2c3c5;"></i></button>
+                                            (click)="decreaseProductQuantity(cartProduct)"
+                                            class="btn bg-transparent border-0"><i class="fa-solid fa-minus"
+                                                style="color: #0d6efd;"></i></button>
+                                        <button *ngIf="cartProduct.quantity <= 1" class="btn bg-transparent border-0">
+                                            <i class="fa-solid fa-minus" style="color: #c2c3c5;" disabled></i></button>
                                         <span>{{cartProduct.quantity}} </span>
                                         <button (click)="increaseProductQuantity(cartProduct)"
-                                            class="btn bg-transparent"><i class="fa-solid fa-plus"
+                                            class="btn bg-transparent border-0"><i class="fa-solid fa-plus"
                                                 style="color: #0d6efd;"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-md-1 m-0">
-                                    <button (click)="removeFromCart(cartProduct)" class="btn bg-transparent"><i
+                                    <button (click)="removeFromCart(cartProduct)" class="btn bg-transparent border-0"><i
                                             class="fa-solid fa-trash" style="color: rgb(167, 10, 10);"></i></button>
                                 </div>
                             </div>
@@ -70,7 +72,7 @@
                             </p>
                         </div>
                         <div class="d-flex flex-row-reverse">
-                            <a routerLink="/checkout" class="btn btn-primary mt-2">CHECKOUT</a>
+                            <a routerLink="/checkout" class="btn button-style mt-2">CHECKOUT</a>
                         </div>
                     </div>
                 </div>
@@ -80,10 +82,10 @@
     </div>
     <div *ngIf="cartProducts.length === 0">
         <div class="mt-5 text-center">
-            
-                <h4>Your cart is empty.</h4>
-                <a routerLink="/products" class="btn btn-primary">Continue shopping</a>
-            
+
+            <h4>Your cart is empty.</h4>
+            <a routerLink="/products" class="btn button-style">Continue shopping</a>
+
         </div>
     </div>
 
