@@ -44,7 +44,7 @@ export class CartService {
     let cartProduct: CartProduct = new CartProduct(product);
     let productInCart = undefined;
     if (this.cartProducts.length > 0) {
-      productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.id === product.id);
+      productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.productId === product.id);
     }
     if (productInCart != undefined) {
       this.increaseProductQuantity(productInCart);
@@ -87,11 +87,11 @@ export class CartService {
   }
 
   removeFromCart(cartProduct: CartProduct) {
-    const productIndex = this.cartProducts.findIndex(tempCartProduct => (tempCartProduct.id === cartProduct.id));
+    const productIndex = this.cartProducts.findIndex(tempCartProduct => (tempCartProduct.cartProductId === cartProduct.cartProductId));
     if (productIndex > -1) {
       this.cartProducts.splice(productIndex, 1);
       if (this.isAuthenticated) {
-        this.cartProductService.deleteCartProduct(this.userEmail, cartProduct.id).subscribe({
+        this.cartProductService.deleteCartProduct(this.userEmail, cartProduct.cartProductId).subscribe({
           next: (response) => console.log(response),
           error: (error) => console.log(error)
         });
@@ -148,7 +148,7 @@ export class CartService {
   increaseProductQuantity(cartProduct: CartProduct) {
     cartProduct.quantity++;
     if (this.isAuthenticated) {
-      this.cartProductService.increaseCartProductQuantity(this.userEmail, cartProduct.id).subscribe({
+      this.cartProductService.increaseCartProductQuantity(this.userEmail, cartProduct.cartProductId).subscribe({
         next: response => console.log(response),
         error: error => console.error(error)
       })
@@ -158,7 +158,7 @@ export class CartService {
   decreaseProductQuantity(cartProduct: CartProduct) {
     cartProduct.quantity--;
     if (this.isAuthenticated) {
-      this.cartProductService.decreaseCartProductQuantity(this.userEmail, cartProduct.id).subscribe({
+      this.cartProductService.decreaseCartProductQuantity(this.userEmail, cartProduct.cartProductId).subscribe({
         next: response => console.log(response),
         error: error => console.error(error)
       })

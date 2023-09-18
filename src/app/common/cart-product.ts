@@ -1,8 +1,8 @@
 import { Product } from "./product";
 
 export class CartProduct {
-    surrogateId: number;
-    id: number;
+    cartProductId: number;
+    productId: number;
     quantity: number;
     name: string;
     description: string;
@@ -10,8 +10,8 @@ export class CartProduct {
     imageUrl: string;
 
     constructor(product: Product) {
-        this.surrogateId = 0;
-        this.id = product.id;
+        this.cartProductId = 0;
+        this.productId = product.id;
         this.quantity = 1;
         this.name = product.name;
         this.description = product.description;
