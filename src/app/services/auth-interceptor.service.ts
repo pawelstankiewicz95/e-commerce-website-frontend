@@ -28,9 +28,11 @@ export class AuthInterceptor implements HttpInterceptor {
     const isOriginAllowed = allowedOrigins.some((allowedOrigin) =>
       allowedOrigin.test(requestOrigin)
     );
+    const accessToken = await this.oktaAuth.getAccessToken();
+
   
-    if (isOriginAllowed) {
-      const accessToken = await this.oktaAuth.getAccessToken();
+    if (isOriginAllowed && accessToken) {
+     // const accessToken = await this.oktaAuth.getAccessToken();
       request = request.clone({
         setHeaders: {
           Authorization: 'Bearer ' + accessToken
