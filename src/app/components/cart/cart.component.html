@@ -32,19 +32,27 @@
                                     <div class="text-center">
                                         <button *ngIf="cartProduct.quantity > 1"
                                             (click)="decreaseProductQuantity(cartProduct)"
-                                            class="btn bg-transparent border-0"><i class="fa-solid fa-minus"
-                                                style="color: #0d6efd;"></i></button>
+                                            class="btn bg-transparent border-0">
+                                            <i class="fa-solid fa-minus" style="color: #0d6efd;"></i>
+                                        </button>
                                         <button *ngIf="cartProduct.quantity <= 1" class="btn bg-transparent border-0">
-                                            <i class="fa-solid fa-minus" style="color: #c2c3c5;" disabled></i></button>
+                                            <i class="fa-solid fa-minus" style="color: #c2c3c5;" disabled></i>
+                                        </button>
                                         <span>{{cartProduct.quantity}} </span>
-                                        <button (click)="increaseProductQuantity(cartProduct)"
-                                            class="btn bg-transparent border-0"><i class="fa-solid fa-plus"
-                                                style="color: #0d6efd;"></i></button>
+                                        <button *ngIf="cartProduct.quantity < cartProduct.product.unitsInStock"
+                                            (click)="increaseProductQuantity(cartProduct)"
+                                            class="btn bg-transparent border-0">
+                                            <i class="fa-solid fa-plus" style="color: #0d6efd;"></i>
+                                        </button>
+                                        <button *ngIf="cartProduct.quantity >= cartProduct.product.unitsInStock" class="btn bg-transparent border-0">
+                                            <i class="fa-solid fa-minus" style="color: #c2c3c5;" disabled></i>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-md-1 m-0">
-                                    <button (click)="removeFromCart(cartProduct)" class="btn bg-transparent border-0"><i
-                                            class="fa-solid fa-trash" style="color: rgb(167, 10, 10);"></i></button>
+                                    <button (click)="removeFromCart(cartProduct)" class="btn bg-transparent border-0">
+                                        <i class="fa-solid fa-trash" style="color: rgb(167, 10, 10);"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
