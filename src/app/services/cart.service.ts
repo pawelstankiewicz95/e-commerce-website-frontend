@@ -44,7 +44,7 @@ export class CartService {
     let cartProduct: CartProduct = new CartProduct(product);
     let productInCart = undefined;
     if (this.cartProducts.length > 0) {
-      productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.productId === product.id);
+      productInCart = this.cartProducts.find(tempCartProduct => tempCartProduct.product.id === product.id);
     }
     if (productInCart != undefined) {
       this.increaseProductQuantity(productInCart);

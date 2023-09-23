@@ -1,7 +1,9 @@
 import { CartProduct } from "./cart-product";
+import { Product } from "./product";
 
 export class OrderProduct {
-    productId: number;
+ //   productId: number;
+    product: Product;
     quantity: number;
     name: string;
     description: string;
@@ -9,7 +11,7 @@ export class OrderProduct {
     imageUrl: string;
 
     constructor(cartProduct: CartProduct) {
-        this.productId = cartProduct.productId;
+        this.product = cartProduct.product;
         this.quantity = cartProduct.quantity;
         this.name = cartProduct.name;
         this.description = cartProduct.description;
