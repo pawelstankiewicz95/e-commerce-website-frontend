@@ -52,7 +52,8 @@ export class CartService {
       this.cartProducts.push(cartProduct);
       if (this.isAuthenticated) {
         this.cartProductService.saveCartProductToCart(cartProduct, this.userEmail).subscribe({
-          next: (response) => console.log(response),
+          next: (response) => {console.log(response);
+          cartProduct.cartProductId = response.cartProductId},
           error: (error) => console.log(error)
         });
       }
